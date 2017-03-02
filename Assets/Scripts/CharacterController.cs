@@ -45,6 +45,30 @@ public class CharacterController : MonoBehaviour
     {
         if (inGame)
         {
+            switch (currentCameraIndex)
+            {
+                case 1:
+                {
+
+                        break;
+                }//end case 1
+                case 2:
+                {
+
+                    break;
+                }//end case 2
+                case 3:
+                {
+
+                    break;
+                }//end case 3
+                default:
+                {
+
+                        break;
+                }
+
+            }//end switch
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 currentCameraIndex = 0;
@@ -63,7 +87,7 @@ public class CharacterController : MonoBehaviour
 
             if (readyGame && Input.GetKeyDown(KeyCode.E))
             {
-                currentCameraIndex = 1;
+                currentCameraIndex = tempCameraIndex;
                 setCamera();
                 inGame = true;
 
@@ -82,6 +106,10 @@ public class CharacterController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("GameStartPoint"))
         {
+            //currentCameraIndex = other.parent.gameObject.gameIndex;
+            tempCameraIndex = other.transform.parent.GetComponent<GameStartVars>().gameIndex;
+
+            //this.transform.parent.GetComponent<YourparentScript>().yourVariable = newValue;
             setText(true);
             readyGame = true;
         }//end if
@@ -108,7 +136,7 @@ public class CharacterController : MonoBehaviour
         cameras[currentCameraIndex].gameObject.SetActive(true);
     }//end set camera
 
-    void setText(bool show)//rename replace
+    void setText(bool show)//rename show
     {
         if(show)
         {
