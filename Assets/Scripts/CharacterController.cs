@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class CharacterController : MonoBehaviour
 {
-    public float speed;
-    private bool inGame;
+    //public float speed;
+    public bool inGame;
     private bool readyGame;
+    private float speed;
 
     public Camera[] cameras;
     public int currentCameraIndex;
@@ -74,6 +75,7 @@ public class CharacterController : MonoBehaviour
                 currentCameraIndex = 0;
                 setCamera();
                 inGame = false;
+                Cursor.lockState = CursorLockMode.Locked;
             }//end if
         }//end if
         else
@@ -89,7 +91,9 @@ public class CharacterController : MonoBehaviour
             {
                 currentCameraIndex = tempCameraIndex;
                 setCamera();
+                setupGame();
                 inGame = true;
+                Cursor.lockState = CursorLockMode.None;
 
                 setText(false);
             }//end if
@@ -106,10 +110,8 @@ public class CharacterController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("GameStartPoint"))
         {
-            //currentCameraIndex = other.parent.gameObject.gameIndex;
             tempCameraIndex = other.transform.parent.GetComponent<GameStartVars>().gameIndex;
 
-            //this.transform.parent.GetComponent<YourparentScript>().yourVariable = newValue;
             setText(true);
             readyGame = true;
         }//end if
@@ -125,6 +127,11 @@ public class CharacterController : MonoBehaviour
         }//end if
     }//end OnTriggerExit
 
+    void setupGame()
+    {
+
+
+    }
 
     void setCamera()
     {

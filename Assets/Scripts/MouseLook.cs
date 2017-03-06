@@ -22,23 +22,26 @@ public class MouseLook : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        var md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
-
-        //if (md.y > 0 && transform.eulerAngles.x < -85 && transform.eulerAngles.x > -175)
-        if (md.y > 0 && transform.eulerAngles.x < 315 && transform.eulerAngles.x > 270 || md.y < 0 && transform.eulerAngles.x < 90 && transform.eulerAngles.x > 45)
+        if (!transform.parent.GetComponent<CharacterController>().inGame)
         {
-            md.y = 0;
-        }
+            var md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 
-        display1 = transform.eulerAngles.x;
-        display2 = Input.GetAxisRaw("Mouse Y");
+            //if (md.y > 0 && transform.eulerAngles.x < -85 && transform.eulerAngles.x > -175)
+            if (md.y > 0 && transform.eulerAngles.x < 315 && transform.eulerAngles.x > 270 || md.y < 0 && transform.eulerAngles.x < 90 && transform.eulerAngles.x > 45)
+            {
+                md.y = 0;
+            }
 
-        md = Vector2.Scale(md, new Vector2(sensitivity * smoothing, sensitivity * smoothing));
-        smoothV.x = Mathf.Lerp(smoothV.x, md.x, 1f / smoothing);
-        smoothV.y = Mathf.Lerp(smoothV.y, md.y, 1f / smoothing);
-        mouseLook += smoothV;
+            display1 = transform.eulerAngles.x;
+            display2 = Input.GetAxisRaw("Mouse Y");
 
-        transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
-        character.transform.localRotation = Quaternion.AngleAxis(mouseLook.x, character.transform.up);
-    }
+            md = Vector2.Scale(md, new Vector2(sensitivity * smoothing, sensitivity * smoothing));
+            smoothV.x = Mathf.Lerp(smoothV.x, md.x, 1f / smoothing);
+            smoothV.y = Mathf.Lerp(smoothV.y, md.y, 1f / smoothing);
+            mouseLook += smoothV;
+
+            transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
+            character.transform.localRotation = Quaternion.AngleAxis(mouseLook.x, character.transform.up);
+        }//end if
+    }//end LateUpdate
 }
