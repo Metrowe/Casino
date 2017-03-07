@@ -5,17 +5,61 @@ using UnityEngine;
 public class RouletteGame : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
+        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        cube.transform.parent = this.transform;
+        //cube.transform.position = new Vector3(0, 0.2F, 0) + transform.parent.position;
+        //cube.transform.position += new Vector3(0, 3.0F, 0) + cube.transform.parent.position;
+        //cube.transform.localScale = new Vector3(5, 2, 2);
+        //Missile clone = (Missile)Instantiate(missilePrefab, transform.position, transform.rotation);
+    }//end Start
+
+    // Update is called once per frame
+    void Update ()
+    {
 		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-}
+	}//end Update
+}//end RouletteGame
 
 /*
+
+    public class ExampleClass : MonoBehaviour
+    {
+	    public GameObject player;
+
+	    //Invoked when a button is pressed.
+	    public void SetParent( GameObject newParent )
+	    {
+		    //Makes the GameObject "newParent" the parent of the GameObject "player".
+		    player.transform.parent = newParent.transform;
+			
+		    //Display the parent's name in the console.
+		    Debug.Log( "Player's Parent: " + player.transform.parent.name );
+
+		    // Check if the new parent has a parent GameObject.
+		    if( newParent.transform.parent != null )
+		    {
+			    //Display the name of the grand parent of the player.
+			    Debug.Log( "Player's Grand parent: " + player.transform.parent.parent.name );
+		    }
+	    }
+
+	    public void DetachFromParent( )
+	    {
+		    // Detaches the transform from its parent.
+		    transform.parent = null;
+	    }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+ GameObject childObject = Instantiate(YourObject) as GameObject;
+ childObject.transform.parent = parentObject.transform
+ using System.Collections.Generic
+
+    ////////////////////////////////////////////////////////////////////////////
+
   private GameObject sceneParent, myRocket;
  
  void Start () {
