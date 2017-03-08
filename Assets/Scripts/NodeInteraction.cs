@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class NodeInteraction : MonoBehaviour
 {
+    //IntList d;
     void objectStart()
     {
         //GetComponent<Renderer>().enabled = false;

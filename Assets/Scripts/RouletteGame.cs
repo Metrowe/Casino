@@ -13,9 +13,13 @@ public class RouletteGame : MonoBehaviour
         Vector3 fix = new Vector3(1, 2, 0) + this.transform.position;
 
         GameObject localNode = Instantiate(BetNode, new Vector3(0, 0, 0) + fix, transform.rotation) as GameObject;
-        localNode = Instantiate(BetNode, new Vector3(2, 2, 2) + fix, transform.rotation) as GameObject;
-        localNode = Instantiate(BetNode, new Vector3(-2, 2, -2) + fix, transform.rotation) as GameObject;
-        //test commit
+        localNode.transform.position = new Vector3(0.1f, 0.1f, 0.1f);
+
+        //cube.transform.position = new Vector3(0, 0.5F, 0);
+
+        //localNode = Instantiate(BetNode, new Vector3(2, 2, 2) + fix, transform.rotation) as GameObject;
+        //localNode = Instantiate(BetNode, new Vector3(-2, 2, -2) + fix, transform.rotation) as GameObject;
+
         //GameObject.Instantiate(BetNode, new Vector3(0, 0, 0) + fix, transform.rotation);
     }//end Start
 
