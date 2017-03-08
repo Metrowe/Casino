@@ -15,6 +15,7 @@ public class RouletteGame : MonoBehaviour
         GameObject localNode = Instantiate(BetNode, new Vector3(0, 0, 0) + fix, transform.rotation) as GameObject;
         localNode = Instantiate(BetNode, new Vector3(2, 2, 2) + fix, transform.rotation) as GameObject;
         localNode = Instantiate(BetNode, new Vector3(-2, 2, -2) + fix, transform.rotation) as GameObject;
+        //test commit
         //GameObject.Instantiate(BetNode, new Vector3(0, 0, 0) + fix, transform.rotation);
     }//end Start
 
