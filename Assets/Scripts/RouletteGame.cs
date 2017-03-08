@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RouletteGame : MonoBehaviour {
+public class RouletteGame : MonoBehaviour
+{
 
 	// Use this for initialization
 	void Start ()
     {
+        Vector3 fix = new Vector3(0, 0.2F, 0);
+
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         cube.transform.parent = this.transform;
+        cube.transform.localPosition = new Vector3(0, 0.2F, 0) + fix;
         //cube.transform.position = new Vector3(0, 0.2F, 0) + transform.parent.position;
         //cube.transform.position += new Vector3(0, 3.0F, 0) + cube.transform.parent.position;
         //cube.transform.localScale = new Vector3(5, 2, 2);
