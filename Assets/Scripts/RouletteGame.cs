@@ -12,23 +12,8 @@ public class RouletteGame : MonoBehaviour
     {
         Vector3 fix = new Vector3(1, 2, 0) + this.transform.position;
 
-        //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        //cube.transform.parent = this.transform;
-        //cube.transform.localPosition = new Vector3(0, 0.2F, 0) + fix;
-
-        //GameObject localNode = Instantiate(BetNode) as GameObject;
-        //GameObject localNode = (GameObject)Instantiate(BetNode);
-
-        GameObject.Instantiate(BetNode, new Vector3(0, 0, 0) + fix, transform.rotation);
-        //localNode = Instantiate(BetNode, new Vector3(0, 1, 0), transform.rotation) as GameObject;
-        //localNode.transform.parent = this.transform;
-        //localNode.transform.localPosition = new Vector3(0, 0, 0) + fix;
-        //localNode.transform.position = new Vector3(0, 0, 0) + fix;
-
-        //cube.transform.position = new Vector3(0, 0.2F, 0) + transform.parent.position;
-        //cube.transform.position += new Vector3(0, 3.0F, 0) + cube.transform.parent.position;
-        //cube.transform.localScale = new Vector3(5, 2, 2);
-        //Missile clone = (Missile)Instantiate(missilePrefab, transform.position, transform.rotation);
+        GameObject localNode = Instantiate(BetNode, new Vector3(0, 0, 0) + fix, transform.rotation) as GameObject;
+        //GameObject.Instantiate(BetNode, new Vector3(0, 0, 0) + fix, transform.rotation);
     }//end Start
 
     // Update is called once per frame
