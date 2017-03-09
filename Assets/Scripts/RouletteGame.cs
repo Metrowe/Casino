@@ -12,8 +12,21 @@ public class RouletteGame : MonoBehaviour
     {
         Vector3 fix = new Vector3(1, 2, 0) + this.transform.position;
 
-        GameObject localNode = Instantiate(BetNode, new Vector3(0, 0, 0) + fix, transform.rotation) as GameObject;
-        localNode.transform.position = new Vector3(0.1f, 0.1f, 0.1f);
+        GameObject localNode;
+        localNode = Instantiate(BetNode, new Vector3(0, 0, 0) + fix, transform.rotation) as GameObject;
+
+        //GameObject myNewInstance = (GameObject)Instantiate(instance, transform.position, transform.rotation);
+       // myNewInstance.transform.localPosition = new Vector3(0.0f, 0.0f, 5.0f);
+
+        if (localNode == null)
+        {
+            Debug.LogWarning("LocalNode somehow isnt fudging created?");
+        }
+
+
+        //fix = localNode.transform.position;
+
+        // static List < GameObject > SpawnedBoxList = new List < GameObject > ();
 
         //cube.transform.position = new Vector3(0, 0.5F, 0);
 
