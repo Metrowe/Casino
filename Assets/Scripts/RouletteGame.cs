@@ -5,18 +5,29 @@ using UnityEngine;
 
 public class RouletteGame : MonoBehaviour
 {
-    public Object BetNode;
+    public GameObject BetNode;
 
     // Use this for initialization
     void Start ()
     {
-        Vector3 fix = new Vector3(1, 2, 0) + this.transform.position;
+        //Vector3 fix = new Vector3(0.0f, 2.0f, 0.0f) + this.transform.position;
+        Vector3 fix = new Vector3(-0.354f, 1.09f, -0.739f);
+        Vector3 grid = new Vector3(0.17f, 0.05f, 0.126f);
+        //fix.x += 0;
+        //fix.y += 5;
+        //fix.z += 0;
 
-        GameObject localNode;
-        localNode = Instantiate(BetNode, new Vector3(0, 0, 0) + fix, transform.rotation) as GameObject;
+        GameObject localNode = Instantiate(BetNode) as GameObject;
+        localNode.transform.parent = this.transform;
+        localNode.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f) + fix;
+        localNode.transform.localScale = new Vector3(grid.x, grid.y, grid.z);
 
+        localNode = Instantiate(BetNode) as GameObject;
+        localNode.transform.parent = this.transform;
+        localNode.transform.localPosition = new Vector3(0.0f + grid.x*2, 0.0f, 0.0f) + fix;
+        localNode.transform.localScale = new Vector3(grid.x, grid.y, grid.z);
         //GameObject myNewInstance = (GameObject)Instantiate(instance, transform.position, transform.rotation);
-       // myNewInstance.transform.localPosition = new Vector3(0.0f, 0.0f, 5.0f);
+        // myNewInstance.transform.localPosition = new Vector3(0.0f, 0.0f, 5.0f);
 
         if (localNode == null)
         {
