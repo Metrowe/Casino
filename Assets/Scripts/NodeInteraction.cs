@@ -31,9 +31,29 @@ public class NodeInteraction : MonoBehaviour
 
     void OnMouseExit()
     {
+        GetComponent<Renderer>().enabled = false;
+    }//end OnMouseExit
+
+    /*
+    void OnMouseEnter()
+    {
+        GetComponent<Renderer>().enabled = true;
+    }//end OnMouseEnter
+
+    void OnMouseOver()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            GetComponent<Renderer>().enabled = false;
+        }//end if
+    }//end OnMouseOver
+
+    void OnMouseExit()
+    {
         //GetComponent<Renderer>().enabled = false;
         GetComponent<Renderer>().enabled = true;
     }//end OnMouseExit
+    */
 
     /////////////gameObject.GetComponent<Renderer>().material.color = new Color(0, 0, 255);
 
