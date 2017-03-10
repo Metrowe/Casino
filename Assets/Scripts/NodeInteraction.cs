@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class NodeInteraction : MonoBehaviour
 {
+    public List<int> values;
     //IntList d;
     void objectStart()
     {

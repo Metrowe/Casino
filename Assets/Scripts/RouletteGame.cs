@@ -6,40 +6,45 @@ using UnityEngine;
 public class RouletteGame : MonoBehaviour
 {
     public GameObject BetNode;
-
+    private Vector3 fix = new Vector3(-0.354f, 1.11f, -0.739f);
+    private Vector3 grid = new Vector3(0.175f, 0.001f, 0.135f);
     // Use this for initialization
     void Start ()
     {
-        //Vector3 fix = new Vector3(0.0f, 2.0f, 0.0f) + this.transform.position;
-        //Vector3 fix = new Vector3(-0.354f, 1.09f, -0.739f);
-        Vector3 fix = new Vector3(-0.354f, 1.18f, -0.739f);
-        //Vector3 grid = new Vector3(0.17f, 0.05f, 0.126f);
-        Vector3 grid = new Vector3(0.17f, 0.05f, 0.126f);
-        //fix.x += 0;
-        //fix.y += 5;
-        //fix.z += 0;
+        List<int> tempListA = new List<int>();
+        List<int> tempListB = new List<int>();
+        List<int> tempListC = new List<int>();
 
+        for (int i = 0; i < 12; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                buildNode(j,0,i,    1,1,1,  tempListA);
+            }//edn for
+        }//end for
+
+        
+
+        tempListA = new List<int>();
+
+        tempListA.Add(1);
+
+        //Here you add 3 BadGuys to the List
+        tempListA.Add(1);
+        //buildNode(1,0,1,    1,1,1);
+        //buildNode(2,0,2,    1,1,1);
+        //buildNode(0.5f,0.1f,0.5f,    0.5f,1,0.5f);
+
+        /*
         GameObject localNode = Instantiate(BetNode) as GameObject;
         localNode.transform.parent = this.transform;
         localNode.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f) + fix;
         localNode.transform.localScale = new Vector3(grid.x, grid.y, grid.z);
-
-        localNode = Instantiate(BetNode) as GameObject;
-        localNode.transform.parent = this.transform;
-        localNode.transform.localPosition = new Vector3(0.0f + grid.x*2, 0.0f, 0.0f) + fix;
-        localNode.transform.localScale = new Vector3(grid.x, grid.y, grid.z);
-
-        localNode = Instantiate(BetNode) as GameObject;
-        localNode.transform.parent = this.transform;
-        localNode.transform.localPosition = new Vector3(0.0f + grid.x * 1, 0.0f, 0.0f) + fix;
-        localNode.transform.localScale = new Vector3(grid.x, grid.y, grid.z);
+        */
         //GameObject myNewInstance = (GameObject)Instantiate(instance, transform.position, transform.rotation);
         // myNewInstance.transform.localPosition = new Vector3(0.0f, 0.0f, 5.0f);
 
-        if (localNode == null)
-        {
-            Debug.LogWarning("LocalNode somehow isnt fudging created?");
-        }
+
 
 
         //fix = localNode.transform.position;
@@ -53,6 +58,23 @@ public class RouletteGame : MonoBehaviour
 
         //GameObject.Instantiate(BetNode, new Vector3(0, 0, 0) + fix, transform.rotation);
     }//end Start
+
+    void buildNode(float px, float py, float pz,    float sx, float sy, float sz,   List<int> tempList)
+    {
+        GameObject localNode = Instantiate(BetNode) as GameObject;
+        localNode.transform.parent = this.transform;
+        localNode.transform.localPosition = new Vector3(px * grid.x, py * grid.y, pz * grid.z) + fix;
+        localNode.transform.localScale = new Vector3(sx * grid.x, sy * grid.y, sz * grid.z);
+
+        localNode.GetComponent<NodeInteraction>().values = tempList;
+
+        //tempCameraIndex = other.transform.parent.GetComponent<GameStartVars>().gameIndex;
+
+        if (localNode == null)
+        {
+            Debug.LogWarning("LocalNode somehow isnt fudging created?");
+        }
+    }//end buildNode
 
     // Update is called once per frame
     void Update ()
