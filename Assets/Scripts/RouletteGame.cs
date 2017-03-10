@@ -11,16 +11,21 @@ public class RouletteGame : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        List<int> tempListA = new List<int>();
-        List<int> tempListB = new List<int>();
-        List<int> tempListC = new List<int>();
+        buildAllNodes();
+        /*
+        List<int> tempListA;
+        List<int> tempListB;
+        List<int> tempListC;
+
+        tempListA = new List<int>();
+
 
         for (int i = 0; i < 12; i++)
         {
             for (int j = 0; j < 3; j++)
             {
                 buildNode(j,0,i,    1,1,1,  tempListA);
-            }//edn for
+            }//end for
         }//end for
 
         
@@ -35,6 +40,7 @@ public class RouletteGame : MonoBehaviour
         //buildNode(2,0,2,    1,1,1);
         //buildNode(0.5f,0.1f,0.5f,    0.5f,1,0.5f);
 
+        */
         /*
         GameObject localNode = Instantiate(BetNode) as GameObject;
         localNode.transform.parent = this.transform;
@@ -58,6 +64,55 @@ public class RouletteGame : MonoBehaviour
 
         //GameObject.Instantiate(BetNode, new Vector3(0, 0, 0) + fix, transform.rotation);
     }//end Start
+
+    void buildAllNodes()
+    {
+        List<int> tempListA = new List<int>();
+        List<int> tempListB = new List<int>();
+        List<int> tempListC = new List<int>();
+
+        //Zero
+        tempListA = new List<int>();
+        tempListA.Add(0);
+
+        buildNode(1,0,-1,   3,1,1,    tempListA);
+
+        for (int i = 1, x = 0, y = 0; i < 36 + 1; i++)
+        {
+            tempListA = new List<int>();
+            tempListA.Add(i);
+
+
+            buildNode(2 - y,0,x,   1,1,1,    tempListA);
+            //nodes.add(new BetNode(new PVector(boardFix.x + grid.x * (x + 2) + grid.x / 2, boardFix.y + grid.y * (2 - y) + grid.y / 2), new PVector(grid.x, grid.y), tempListA, 35));
+
+            y = (y + 1) % 3;
+
+            if(y == 0)
+            {
+                x++;
+            }//end if
+        }//end for
+
+            /*
+            //Straights
+            for (int i = 1, x = 0, y = 0; i < numbers.length; i++)
+            {
+                tempListA = new IntList();
+                tempListA.append(i);
+
+                nodes.add(new BetNode(new PVector(boardFix.x + grid.x * (x + 2) + grid.x / 2, boardFix.y + grid.y * (2 - y) + grid.y / 2), new PVector(grid.x, grid.y), tempListA, 35));
+
+                y = (y + 1) % 3;
+
+                if (y == 0)
+                {
+                    x++;
+                }//end if
+            }//end for
+            */
+
+        }//end buildAllNodes
 
     void buildNode(float px, float py, float pz,    float sx, float sy, float sz,   List<int> tempList)
     {

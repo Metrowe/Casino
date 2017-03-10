@@ -27,6 +27,11 @@ public class NodeInteraction : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             GetComponent<Renderer>().enabled = false;
+
+            for(int i = 0; i < values.Count; i++)
+            {
+                Debug.Log("Value[" + i + "] = " + values[i]);
+            }//end for
         }//end if
     }//end OnMouseOver
 
