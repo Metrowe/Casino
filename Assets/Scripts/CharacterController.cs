@@ -51,7 +51,7 @@ public class CharacterController : MonoBehaviour
                 case 1:
                 {
 
-                        break;
+                    break;
                 }//end case 1
                 case 2:
                 {
@@ -66,13 +66,15 @@ public class CharacterController : MonoBehaviour
                 default:
                 {
 
-                        break;
-                }
-
+                    break;
+                }//end default
             }//end switch
+
             if (Input.GetKeyDown(KeyCode.Q))
             {
+                endGame();
                 currentCameraIndex = 0;
+
                 setCamera();
                 inGame = false;
                 Cursor.lockState = CursorLockMode.Locked;
@@ -90,8 +92,9 @@ public class CharacterController : MonoBehaviour
             if (readyGame && Input.GetKeyDown(KeyCode.E))
             {
                 currentCameraIndex = tempCameraIndex;
+                startGame();
+
                 setCamera();
-                setupGame();
                 inGame = true;
                 Cursor.lockState = CursorLockMode.None;
 
@@ -127,11 +130,67 @@ public class CharacterController : MonoBehaviour
         }//end if
     }//end OnTriggerExit
 
-    void setupGame()
+    void startGame()
     {
+        GameObject temp;
 
+        switch (currentCameraIndex)
+        {
+            case 1:
+            {
+                    //ScriptName sn = gameObject.GetComponent<ScriptName>()
+                    //sn.DoSomething();
+                    temp = GameObject.Find("Roulette");
+                    temp.GetComponent<RouletteGame>().startSelf();
+                break;
+            }//end case 1
+            case 2:
+            {
 
-    }
+                break;
+            }//end case 2
+            case 3:
+            {
+
+                break;
+            }//end case 3
+            default:
+            {
+
+                break;
+            }//end default
+        }//end switch
+    }//end setupGame
+
+    void endGame()
+    {
+        GameObject temp;
+
+        switch (currentCameraIndex)
+        {
+            case 1:
+            {
+                temp = GameObject.Find("Roulette");
+                temp.GetComponent<RouletteGame>().endSelf();
+                break;
+            }//end case 1
+            case 2:
+            {
+
+                break;
+            }//end case 2
+            case 3:
+            {
+
+                break;
+            }//end case 3
+            default:
+            {
+
+                break;
+            }//end default
+        }//end switch
+    }//end setupGame
 
     void setCamera()
     {

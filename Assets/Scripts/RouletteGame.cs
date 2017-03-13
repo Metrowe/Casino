@@ -9,9 +9,20 @@ public class RouletteGame : MonoBehaviour
     private Vector3 fix = new Vector3(-0.354f, 1.11f, -0.739f);
     private Vector3 grid = new Vector3(0.175f, 0.001f, 0.135f);
     // Use this for initialization
-    void Start ()
+    public void startSelf()
     {
         buildAllNodes();
+    }//end setSelf
+
+    public void endSelf()
+    {
+        Debug.Log("endSelf called");
+    }//end setSelf
+
+    void Start ()
+    {
+        //buildAllNodes();
+
         /*
         List<int> tempListA;
         List<int> tempListB;
