@@ -281,12 +281,12 @@ public class RouletteGame : MonoBehaviour
         for (int i = 0; i < limit/3; i++)
         {
             tempListA = new List<int>();
-            tempListA.Add(i*3+3);
             tempListA.Add(i*3+2);
+            tempListA.Add(i*3+3);
         
             tempListB = new List<int>();
-            tempListB.Add(i*3+2);
             tempListB.Add(i*3+1);
+            tempListB.Add(i*3+2);
         
             buildNode(0.5f,0.001f,i,      tempY,1,tempX, tempListA, 17);
             buildNode(1.5f,0.001f,i,      tempY,1,tempX, tempListB, 17);
@@ -299,12 +299,36 @@ public class RouletteGame : MonoBehaviour
         for (int i = 0; i < limit / 3; i++)
         {
             tempListA = new List<int>();
-            tempListA.Add(i * 3 + 3);
-            tempListA.Add(i * 3 + 2);
             tempListA.Add(i * 3 + 1);
+            tempListA.Add(i * 3 + 2);
+            tempListA.Add(i * 3 + 3);
 
             buildNode(2.5f,0.001f,i,      tempY,1,tempX, tempListA, 11);
         }//end for
+
+        //Squares
+        tempX = 0.4f;
+        tempY = 0.3f;
+
+        for (int i = 0; i < limit / 3 - 1; i++)
+        {
+            tempListA = new List<int>();
+            tempListA.Add(i * 3 + 2);
+            tempListA.Add(i * 3 + 3);
+            tempListA.Add(i * 3 + 5);
+            tempListA.Add(i * 3 + 6);
+
+            tempListB = new List<int>();
+            tempListB.Add(i * 3 + 1);
+            tempListB.Add(i * 3 + 2);
+            tempListB.Add(i * 3 + 4);
+            tempListB.Add(i * 3 + 5);
+
+            buildNode(0.5f,0.001f,i+0.5f,    tempY,1,tempX, tempListA, 17);
+            buildNode(1.5f,0.001f,i+0.5f,    tempY,1,tempX, tempListB, 17);
+        }//end for
+
+       
 
 
 
