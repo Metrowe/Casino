@@ -97,7 +97,7 @@ public class RouletteGame : MonoBehaviour
     {
         GameObject localNode = Instantiate(BetNode) as GameObject;
         localNode.transform.parent = this.transform;
-        localNode.transform.localPosition = new Vector3(px * grid.x, py * grid.y, pz * grid.z) + fix;
+        localNode.transform.localPosition = new Vector3(px * grid.x, py * 1, pz * grid.z) + fix;
         localNode.transform.localScale = new Vector3(sx * grid.x, sy * grid.y, sz * grid.z);
         localNode.transform.localRotation = new Quaternion();
 
@@ -122,7 +122,7 @@ public class RouletteGame : MonoBehaviour
         tempListA = new List<int>();
         tempListA.Add(0);
 
-        buildNode(1, 0, -1, 3, 1, 1, tempListA, 35);
+        buildNode(1,0,-1,   3,1,1, tempListA, 35);
 
         //Straights
         for (int i = 1, x = 0, y = 0; i < limit; i++)
@@ -130,7 +130,7 @@ public class RouletteGame : MonoBehaviour
             tempListA = new List<int>();
             tempListA.Add(i);
 
-            buildNode(2 - y, 0, x, 1, 1, 1, tempListA, 35);
+            buildNode(2 - y,0,x,    1,1,1, tempListA, 35);
 
             y = (y + 1) % 3;
 
@@ -139,7 +139,6 @@ public class RouletteGame : MonoBehaviour
                 x++;
             }//end if
         }//end for
-
 
         //2 to 1
         tempListA = new List<int>();
@@ -162,10 +161,9 @@ public class RouletteGame : MonoBehaviour
             }//end else
         }//end for
 
-        buildNode(0, 0, 12, 1, 1, 1, tempListA, 2);
-        buildNode(1, 0, 12, 1, 1, 1, tempListB, 2);
-        buildNode(2, 0, 12, 1, 1, 1, tempListC, 2);
-
+        buildNode(0,0,12,   1,1,1, tempListA, 2);
+        buildNode(1,0,12,   1,1,1, tempListB, 2);
+        buildNode(2,0,12,   1,1,1, tempListC, 2);
 
         //Dozens
         tempListA = new List<int>();
@@ -188,9 +186,9 @@ public class RouletteGame : MonoBehaviour
             }//end else
         }//end for
 
-        buildNode(3, 0, 1.5f, 1, 1, 4, tempListA, 2);
-        buildNode(3, 0, 5.5f, 1, 1, 4, tempListB, 2);
-        buildNode(3, 0, 9.5f, 1, 1, 4, tempListC, 2);
+        buildNode(3,0,1.5f,     1,1,4, tempListA, 2);
+        buildNode(3,0,5.5f,     1,1,4, tempListB, 2);
+        buildNode(3,0,9.5f,     1,1,4, tempListC, 2);
 
 
         //Lows-highs
@@ -209,8 +207,8 @@ public class RouletteGame : MonoBehaviour
             }//end else 
         }//end for
 
-        buildNode(4, 0, 0.5f, 1, 1, 2, tempListA, 1);
-        buildNode(4, 0, 10.5f, 1, 1, 2, tempListB, 1);
+        buildNode(4,0,0.5f,     1,1,2, tempListA, 1);
+        buildNode(4,0,10.5f,    1,1,2, tempListB, 1);
 
 
         //Evens-odds
@@ -229,8 +227,8 @@ public class RouletteGame : MonoBehaviour
             }//end else 
         }//end for
 
-        buildNode(4, 0, 2.5f, 1, 1, 2, tempListA, 1);
-        buildNode(4, 0, 8.5f, 1, 1, 2, tempListB, 1);
+        buildNode(4,0,2.5f,     1,1,2, tempListA, 1);
+        buildNode(4,0,8.5f,     1,1,2, tempListB, 1);
 
         
         //Colours
@@ -249,9 +247,35 @@ public class RouletteGame : MonoBehaviour
             }//end else
         }//end for
 
-        buildNode(4, 0, 4.5f, 1, 1, 2, tempListA, 1);
-        buildNode(4, 0, 6.5f, 1, 1, 2, tempListB, 1);
+        buildNode(4,0,4.5f,     1,1,2, tempListA, 1);
+        buildNode(4,0,6.5f,     1,1,2, tempListB, 1);
+
+
+        //Split (Horizontal)
+        float tempX = 0.4f;
+        float tempY = 0.4f;
+
+        for (int i = 0; i < limit/3-1; i++)
+        {
+            tempListA = new List<int>();
+            tempListA.Add(i*3+3);
+            tempListA.Add(i*3+6);
         
+            tempListB = new List<int>();
+            tempListB.Add(i*3+2);
+            tempListB.Add(i*3+5);
+        
+            tempListC = new List<int>();
+            tempListC.Add(i*3+1);
+            tempListC.Add(i*3+4);
+        
+            buildNode(0,0.001f,i+0.5f,      tempX,1,tempY, tempListA, 17);
+            buildNode(1,0.001f,i+0.5f,      tempX,1,tempY, tempListB, 17);
+            buildNode(2,0.001f,i+0.5f,      tempX,1,tempY, tempListC, 17);
+         }//end for
+
+
+
     }//end buildAllNodes
 }//end RouletteGame
 
