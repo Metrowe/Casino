@@ -8,6 +8,8 @@ public class RouletteGame : MonoBehaviour
     public GameObject BetNode;
     private Vector3 fix = new Vector3(-0.354f, 1.11f, -0.739f);
     private Vector3 grid = new Vector3(0.175f, 0.001f, 0.135f);
+
+    private List<GameObject> storedNodes;
     // Use this for initialization
     public void startSelf()
     {
@@ -17,10 +19,16 @@ public class RouletteGame : MonoBehaviour
     public void endSelf()
     {
         Debug.Log("endSelf called");
+        for (int i = storedNodes.Count - 1; i > -1; i--)
+        {
+            Destroy(storedNodes[i]);
+            //Debug.Log("Value[" + i + "] = " + values[i]);
+        }//end for
     }//end setSelf
 
     void Start ()
     {
+        storedNodes = new List<GameObject>();
         //buildAllNodes();
 
         /*
@@ -133,7 +141,7 @@ public class RouletteGame : MonoBehaviour
         localNode.transform.localScale = new Vector3(sx * grid.x, sy * grid.y, sz * grid.z);
 
         localNode.GetComponent<NodeInteraction>().values = tempList;
-
+        storedNodes.Add(localNode);
         //tempCameraIndex = other.transform.parent.GetComponent<GameStartVars>().gameIndex;
 
         if (localNode == null)

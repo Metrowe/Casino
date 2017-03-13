@@ -5,6 +5,7 @@ using UnityEngine;
 public class NodeInteraction : MonoBehaviour
 {
     public List<int> values;
+    public int payout;
     //IntList d;
     void objectStart()
     {
