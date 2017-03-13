@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+//using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 
@@ -10,79 +12,98 @@ public class RouletteGame : MonoBehaviour
     private Vector3 grid = new Vector3(0.175f, 0.001f, 0.135f);
 
     private List<GameObject> storedNodes;
-    // Use this for initialization
+    private int[] colors;
+    private int[] order;
+
+    void Start()
+    {
+
+    }//end Start
+
     public void startSelf()
     {
+        storedNodes = new List<GameObject>();
+        colors = new int[37];
+        order = new int[37];
+
         buildAllNodes();
+        readNumberArray();
     }//end setSelf
 
     public void endSelf()
     {
-        Debug.Log("endSelf called");
         for (int i = storedNodes.Count - 1; i > -1; i--)
         {
             Destroy(storedNodes[i]);
-            //Debug.Log("Value[" + i + "] = " + values[i]);
         }//end for
+
+        colors = new int[0];
+        order = new int[0];
     }//end setSelf
 
-    void Start ()
+    // Update is called once per frame
+    void Update ()
     {
-        storedNodes = new List<GameObject>();
-        //buildAllNodes();
+		
+	}//end Update
 
-        /*
-        List<int> tempListA;
-        List<int> tempListB;
-        List<int> tempListC;
+    void readNumberArray()
+    {
+        int counter = 0;
+        int numVal;
+        string line;
 
-        tempListA = new List<int>();
+        StreamReader file = new StreamReader("data/Wheel_Order.txt");
 
+        numVal = Int32.Parse(file.ReadLine());
+        colors[0] = numVal;
+        order[0] = numVal;
 
-        for (int i = 0; i < 12; i++)
+        while ((line = file.ReadLine()) != null)
         {
-            for (int j = 0; j < 3; j++)
+            counter++;
+           
+            numVal = Int32.Parse(line);
+
+            order[counter] = numVal;
+            if (counter % 2 == 0)
             {
-                buildNode(j,0,i,    1,1,1,  tempListA);
-            }//end for
+                colors[numVal] = -1;
+            }//end if
+            else
+            {
+                colors[numVal] = 1;
+            }//end else
+
+            //Debug.Log(line);
+        }//end while
+
+        file.Close();
+
+        for(int i = 0; i < order.Length; i++)
+        {
+            Debug.Log("order[" + i + "] = " + order[i]);
         }//end for
 
-        
+    }//end readNumberArray
 
-        tempListA = new List<int>();
-
-        tempListA.Add(1);
-
-        //Here you add 3 BadGuys to the List
-        tempListA.Add(1);
-        //buildNode(1,0,1,    1,1,1);
-        //buildNode(2,0,2,    1,1,1);
-        //buildNode(0.5f,0.1f,0.5f,    0.5f,1,0.5f);
-
-        */
-        /*
+    void buildNode(float px, float py, float pz, float sx, float sy, float sz, List<int> tempList, int pay)
+    {
         GameObject localNode = Instantiate(BetNode) as GameObject;
         localNode.transform.parent = this.transform;
-        localNode.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f) + fix;
-        localNode.transform.localScale = new Vector3(grid.x, grid.y, grid.z);
-        */
-        //GameObject myNewInstance = (GameObject)Instantiate(instance, transform.position, transform.rotation);
-        // myNewInstance.transform.localPosition = new Vector3(0.0f, 0.0f, 5.0f);
+        localNode.transform.localPosition = new Vector3(px * grid.x, py * grid.y, pz * grid.z) + fix;
+        localNode.transform.localScale = new Vector3(sx * grid.x, sy * grid.y, sz * grid.z);
+        localNode.transform.localRotation = new Quaternion();
 
+        localNode.GetComponent<NodeInteraction>().values = tempList;
+        localNode.GetComponent<NodeInteraction>().payout = pay;
+        storedNodes.Add(localNode);
 
-
-
-        //fix = localNode.transform.position;
-
-        // static List < GameObject > SpawnedBoxList = new List < GameObject > ();
-
-        //cube.transform.position = new Vector3(0, 0.5F, 0);
-
-        //localNode = Instantiate(BetNode, new Vector3(2, 2, 2) + fix, transform.rotation) as GameObject;
-        //localNode = Instantiate(BetNode, new Vector3(-2, 2, -2) + fix, transform.rotation) as GameObject;
-
-        //GameObject.Instantiate(BetNode, new Vector3(0, 0, 0) + fix, transform.rotation);
-    }//end Start
+        if (localNode == null)
+        {
+            Debug.LogWarning("LocalNode somehow isnt fudging created?");
+        }//end if
+    }//end buildNode
 
     void buildAllNodes()
     {
@@ -95,7 +116,7 @@ public class RouletteGame : MonoBehaviour
         tempListA = new List<int>();
         tempListA.Add(0);
 
-        buildNode(1,0,-1,   3,1,1,    tempListA,    35);
+        buildNode(1, 0, -1, 3, 1, 1, tempListA, 35);
 
         //Straights
         for (int i = 1, x = 0, y = 0; i < limit; i++)
@@ -103,17 +124,17 @@ public class RouletteGame : MonoBehaviour
             tempListA = new List<int>();
             tempListA.Add(i);
 
-            buildNode(2 - y,0,x,   1,1,1,    tempListA,     35);
-            
+            buildNode(2 - y, 0, x, 1, 1, 1, tempListA, 35);
+
             y = (y + 1) % 3;
 
-            if(y == 0)
+            if (y == 0)
             {
                 x++;
             }//end if
         }//end for
 
-        
+
         //2 to 1
         tempListA = new List<int>();
         tempListB = new List<int>();
@@ -135,11 +156,11 @@ public class RouletteGame : MonoBehaviour
             }//end else
         }//end for
 
-        buildNode(0,0,12,   1,1,1,    tempListA,    2);
-        buildNode(1,0,12,   1,1,1,    tempListB,    2);
-        buildNode(2,0,12,   1,1,1,    tempListC,    2);
+        buildNode(0, 0, 12, 1, 1, 1, tempListA, 2);
+        buildNode(1, 0, 12, 1, 1, 1, tempListB, 2);
+        buildNode(2, 0, 12, 1, 1, 1, tempListC, 2);
 
-        
+
         //Dozens
         tempListA = new List<int>();
         tempListB = new List<int>();
@@ -147,11 +168,11 @@ public class RouletteGame : MonoBehaviour
 
         for (int i = 1; i < limit; i++)
         {
-            if(  i < 13  )
+            if (i < 13)
             {
                 tempListA.Add(i);
             }//end if
-            else if(  i > 12 && i < 25)
+            else if (i > 12 && i < 25)
             {
                 tempListB.Add(i);
             }//end else if
@@ -160,77 +181,123 @@ public class RouletteGame : MonoBehaviour
                 tempListC.Add(i);
             }//end else
         }//end for
-    
-        buildNode(3,0,1.5f,   1,1,4,    tempListA,    2);
-        buildNode(3,0,5.5f,   1,1,4,    tempListB,    2);
-        buildNode(3,0,9.5f,   1,1,4,    tempListC,    2);
 
-        
+        buildNode(3, 0, 1.5f, 1, 1, 4, tempListA, 2);
+        buildNode(3, 0, 5.5f, 1, 1, 4, tempListB, 2);
+        buildNode(3, 0, 9.5f, 1, 1, 4, tempListC, 2);
+
+
         //Lows-highs
         tempListA = new List<int>();
         tempListB = new List<int>();
 
         for (int i = 1; i < limit; i++)
         {
-            if(  i < 19  )
+            if (i < 19)
             {
                 tempListA.Add(i);
             }//end if
-            else 
+            else
             {
                 tempListB.Add(i);
             }//end else 
         }//end for
 
-        buildNode(4,0,0.5f,    1,1,2,    tempListA,    1);
-        buildNode(4,0,10.5f,   1,1,2,    tempListB,    1);
+        buildNode(4, 0, 0.5f, 1, 1, 2, tempListA, 1);
+        buildNode(4, 0, 10.5f, 1, 1, 2, tempListB, 1);
 
-        
+
         //Evens-odds
         tempListA = new List<int>();
         tempListB = new List<int>();
 
         for (int i = 1; i < limit; i++)
         {
-            if(  i % 2 == 0  )
+            if (i % 2 == 0)
             {
                 tempListA.Add(i);
             }//end if
-            else 
+            else
             {
                 tempListB.Add(i);
             }//end else 
         }//end for
-    
-        buildNode(4,0,2.5f,    1,1,2,    tempListA,    1);
-        buildNode(4,0,8.5f,    1,1,2,    tempListB,    1);
+
+        buildNode(4, 0, 2.5f, 1, 1, 2, tempListA, 1);
+        buildNode(4, 0, 8.5f, 1, 1, 2, tempListB, 1);
+
+        
     }//end buildAllNodes
-
-    void buildNode(float px, float py, float pz,    float sx, float sy, float sz,   List<int> tempList,     int pay)
-    {
-        GameObject localNode = Instantiate(BetNode) as GameObject;
-        localNode.transform.parent = this.transform;
-        localNode.transform.localPosition = new Vector3(px * grid.x, py * grid.y, pz * grid.z) + fix;
-        localNode.transform.localScale = new Vector3(sx * grid.x, sy * grid.y, sz * grid.z);
-
-        localNode.GetComponent<NodeInteraction>().values = tempList;
-        localNode.GetComponent<NodeInteraction>().payout = pay;
-        storedNodes.Add(localNode);
-
-        if (localNode == null)
-        {
-            Debug.LogWarning("LocalNode somehow isnt fudging created?");
-        }
-    }//end buildNode
-
-    // Update is called once per frame
-    void Update ()
-    {
-		
-	}//end Update
 }//end RouletteGame
 
 /*
+        List<int> tempListA;
+        List<int> tempListB;
+        List<int> tempListC;
+
+        tempListA = new List<int>();
+
+
+        for (int i = 0; i < 12; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                buildNode(j,0,i,    1,1,1,  tempListA);
+            }//end for
+        }//end for
+
+        
+
+        tempListA = new List<int>();
+
+        tempListA.Add(1);
+
+    GameObject localNode = Instantiate(BetNode) as GameObject;
+    localNode.transform.parent = this.transform;
+    localNode.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f) + fix;
+    localNode.transform.localScale = new Vector3(grid.x, grid.y, grid.z);
+
+    GameObject myNewInstance = (GameObject)Instantiate(instance, transform.position, transform.rotation);
+    myNewInstance.transform.localPosition = new Vector3(0.0f, 0.0f, 5.0f);
+
+
+
+
+fix = localNode.transform.position;
+
+static List < GameObject > SpawnedBoxList = new List < GameObject > ();
+
+cube.transform.position = new Vector3(0, 0.5F, 0);
+
+localNode = Instantiate(BetNode, new Vector3(2, 2, 2) + fix, transform.rotation) as GameObject;
+localNode = Instantiate(BetNode, new Vector3(-2, 2, -2) + fix, transform.rotation) as GameObject;
+
+GameObject.Instantiate(BetNode, new Vector3(0, 0, 0) + fix, transform.rotation);
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+
+int counter = 0;
+    string line;
+
+    // Read the file and display it line by line.
+    System.IO.StreamReader file = new System.IO.StreamReader("c:\\test.txt");
+    while ((line = file.ReadLine()) != null)
+    {
+        Console.WriteLine(line);
+        counter++;
+    }
+
+    file.Close();
+
+    /////////////////////////////////////////////
+
+    using (TextReader reader = File.OpenText("test.txt"))
+    {
+        int x = int.Parse(reader.ReadLine());
+        double y = double.Parse(reader.ReadLine());
+        string z = reader.ReadLine();
+    }// end using
+    /////////////////////////////
+
 
     public class ExampleClass : MonoBehaviour
     {
