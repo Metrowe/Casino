@@ -269,9 +269,27 @@ public class RouletteGame : MonoBehaviour
             tempListC.Add(i*3+1);
             tempListC.Add(i*3+4);
         
-            buildNode(0,0.001f,i+0.5f,      tempX,1,tempY, tempListA, 17);
-            buildNode(1,0.001f,i+0.5f,      tempX,1,tempY, tempListB, 17);
-            buildNode(2,0.001f,i+0.5f,      tempX,1,tempY, tempListC, 17);
+            buildNode(0,0.001f,i+0.5f,      tempY,1,tempX, tempListA, 17);
+            buildNode(1,0.001f,i+0.5f,      tempY,1,tempX, tempListB, 17);
+            buildNode(2,0.001f,i+0.5f,      tempY,1,tempX, tempListC, 17);
+         }//end for
+
+        //Split (Vertical)
+        tempX = 0.4f;
+        tempY = 0.3f;
+
+        for (int i = 0; i < limit/3; i++)
+        {
+            tempListA = new List<int>();
+            tempListA.Add(i*3+3);
+            tempListA.Add(i*3+2);
+        
+            tempListB = new List<int>();
+            tempListB.Add(i*3+2);
+            tempListB.Add(i*3+1);
+        
+            buildNode(0.5f,0.001f,i,      tempY,1,tempX, tempListA, 17);
+            buildNode(1.5f,0.001f,i,      tempY,1,tempX, tempListB, 17);
          }//end for
 
 
