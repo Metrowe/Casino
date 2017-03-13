@@ -86,6 +86,7 @@ public class RouletteGame : MonoBehaviour
 
     void buildAllNodes()
     {
+        int limit = 36 + 1;
         List<int> tempListA = new List<int>();
         List<int> tempListB = new List<int>();
         List<int> tempListC = new List<int>();
@@ -94,17 +95,16 @@ public class RouletteGame : MonoBehaviour
         tempListA = new List<int>();
         tempListA.Add(0);
 
-        buildNode(1,0,-1,   3,1,1,    tempListA);
+        buildNode(1,0,-1,   3,1,1,    tempListA,    35);
 
-        for (int i = 1, x = 0, y = 0; i < 36 + 1; i++)
+        //Straights
+        for (int i = 1, x = 0, y = 0; i < limit; i++)
         {
             tempListA = new List<int>();
             tempListA.Add(i);
 
-
-            buildNode(2 - y,0,x,   1,1,1,    tempListA);
-            //nodes.add(new BetNode(new PVector(boardFix.x + grid.x * (x + 2) + grid.x / 2, boardFix.y + grid.y * (2 - y) + grid.y / 2), new PVector(grid.x, grid.y), tempListA, 35));
-
+            buildNode(2 - y,0,x,   1,1,1,    tempListA,     35);
+            
             y = (y + 1) % 3;
 
             if(y == 0)
@@ -113,27 +113,63 @@ public class RouletteGame : MonoBehaviour
             }//end if
         }//end for
 
-            /*
-            //Straights
-            for (int i = 1, x = 0, y = 0; i < numbers.length; i++)
+        
+        //2 to 1
+        tempListA = new List<int>();
+        tempListB = new List<int>();
+        tempListC = new List<int>();
+
+        for (int i = 1; i < limit; i++)
+        {
+            if (i % 3 == 0)
             {
-                tempListA = new IntList();
-                tempListA.append(i);
+                tempListA.Add(i);
+            }//end if
+            else if (i % 3 == 2)
+            {
+                tempListB.Add(i);
+            }//end else if
+            else
+            {
+                tempListC.Add(i);
+            }//end else
+        }//end for
 
-                nodes.add(new BetNode(new PVector(boardFix.x + grid.x * (x + 2) + grid.x / 2, boardFix.y + grid.y * (2 - y) + grid.y / 2), new PVector(grid.x, grid.y), tempListA, 35));
+        buildNode(0,0,12,   1,1,1,    tempListA,    2);
+        buildNode(1,0,12,   1,1,1,    tempListB,    2);
+        buildNode(2,0,12,   1,1,1,    tempListC,    2);
 
-                y = (y + 1) % 3;
+        
+        //Dozens
+        tempListA = new List<int>();
+        tempListB = new List<int>();
+        tempListC = new List<int>();
 
-                if (y == 0)
-                {
-                    x++;
-                }//end if
-            }//end for
-            */
+        for (int i = 1; i < limit; i++)
+        {
+            if(  i < 13  )
+            {
+                tempListA.Add(i);
+            }//end if
+            else if(  i > 12 && i < 25)
+            {
+                tempListB.Add(i);
+            }//end else if
+            else
+            {
+                tempListC.Add(i);
+            }//end else
+        }//end for
+    
+        buildNode(3,0,1.5f,   1,1,4,    tempListA,    2);
+        buildNode(3,0,5.5f,   1,1,4,    tempListB,    2);
+        buildNode(3,0,9.5f,   1,1,4,    tempListC,    2);
 
-        }//end buildAllNodes
+         
 
-    void buildNode(float px, float py, float pz,    float sx, float sy, float sz,   List<int> tempList)
+    }//end buildAllNodes
+
+    void buildNode(float px, float py, float pz,    float sx, float sy, float sz,   List<int> tempList,     int pay)
     {
         GameObject localNode = Instantiate(BetNode) as GameObject;
         localNode.transform.parent = this.transform;
@@ -141,8 +177,8 @@ public class RouletteGame : MonoBehaviour
         localNode.transform.localScale = new Vector3(sx * grid.x, sy * grid.y, sz * grid.z);
 
         localNode.GetComponent<NodeInteraction>().values = tempList;
+        localNode.GetComponent<NodeInteraction>().payout = pay;
         storedNodes.Add(localNode);
-        //tempCameraIndex = other.transform.parent.GetComponent<GameStartVars>().gameIndex;
 
         if (localNode == null)
         {
