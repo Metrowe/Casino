@@ -26,8 +26,9 @@ public class RouletteGame : MonoBehaviour
         colors = new int[37];
         order = new int[37];
 
-        buildAllNodes();
         readNumberArray();
+        buildAllNodes();
+        
     }//end setSelf
 
     public void endSelf()
@@ -80,11 +81,16 @@ public class RouletteGame : MonoBehaviour
 
         file.Close();
 
+        for (int i = 0; i < colors.Length; i++)
+        {
+            Debug.Log("colors[" + i + "] = " + colors[i]);
+        }//end for
+        /*
         for(int i = 0; i < order.Length; i++)
         {
             Debug.Log("order[" + i + "] = " + order[i]);
         }//end for
-
+        */
     }//end readNumberArray
 
     void buildNode(float px, float py, float pz, float sx, float sy, float sz, List<int> tempList, int pay)
@@ -226,6 +232,25 @@ public class RouletteGame : MonoBehaviour
         buildNode(4, 0, 2.5f, 1, 1, 2, tempListA, 1);
         buildNode(4, 0, 8.5f, 1, 1, 2, tempListB, 1);
 
+        
+        //Colours
+        tempListA = new List<int>();
+        tempListB = new List<int>();
+
+        for (int i = 1; i < limit; i++)
+        {
+            if(colors[i] == 1 )
+            {
+                tempListA.Add(i);
+            }//end if
+            else
+            {
+                tempListB.Add(i);
+            }//end else
+        }//end for
+
+        buildNode(4, 0, 4.5f, 1, 1, 2, tempListA, 1);
+        buildNode(4, 0, 6.5f, 1, 1, 2, tempListB, 1);
         
     }//end buildAllNodes
 }//end RouletteGame
