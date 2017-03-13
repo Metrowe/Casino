@@ -292,6 +292,20 @@ public class RouletteGame : MonoBehaviour
             buildNode(1.5f,0.001f,i,      tempY,1,tempX, tempListB, 17);
          }//end for
 
+        //Street
+        tempX = 0.4f;
+        tempY = 0.3f;
+
+        for (int i = 0; i < limit / 3; i++)
+        {
+            tempListA = new List<int>();
+            tempListA.Add(i * 3 + 3);
+            tempListA.Add(i * 3 + 2);
+            tempListA.Add(i * 3 + 1);
+
+            buildNode(2.5f,0.001f,i,      tempY,1,tempX, tempListA, 11);
+        }//end for
+
 
 
     }//end buildAllNodes
