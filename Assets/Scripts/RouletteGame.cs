@@ -165,8 +165,45 @@ public class RouletteGame : MonoBehaviour
         buildNode(3,0,5.5f,   1,1,4,    tempListB,    2);
         buildNode(3,0,9.5f,   1,1,4,    tempListC,    2);
 
-         
+        
+        //Lows-highs
+        tempListA = new List<int>();
+        tempListB = new List<int>();
 
+        for (int i = 1; i < limit; i++)
+        {
+            if(  i < 19  )
+            {
+                tempListA.Add(i);
+            }//end if
+            else 
+            {
+                tempListB.Add(i);
+            }//end else 
+        }//end for
+
+        buildNode(4,0,0.5f,    1,1,2,    tempListA,    1);
+        buildNode(4,0,10.5f,   1,1,2,    tempListB,    1);
+
+        
+        //Evens-odds
+        tempListA = new List<int>();
+        tempListB = new List<int>();
+
+        for (int i = 1; i < limit; i++)
+        {
+            if(  i % 2 == 0  )
+            {
+                tempListA.Add(i);
+            }//end if
+            else 
+            {
+                tempListB.Add(i);
+            }//end else 
+        }//end for
+    
+        buildNode(4,0,2.5f,    1,1,2,    tempListA,    1);
+        buildNode(4,0,8.5f,    1,1,2,    tempListB,    1);
     }//end buildAllNodes
 
     void buildNode(float px, float py, float pz,    float sx, float sy, float sz,   List<int> tempList,     int pay)
