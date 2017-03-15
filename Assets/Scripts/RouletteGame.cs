@@ -12,6 +12,7 @@ public class RouletteGame : MonoBehaviour
     private Vector3 grid = new Vector3(0.175f, 0.001f, 0.135f);
 
     private List<GameObject> storedNodes;
+    private List<int>[] bets;
     private int[] colors;
     private int[] order;
 
@@ -23,6 +24,11 @@ public class RouletteGame : MonoBehaviour
     public void startSelf()
     {
         storedNodes = new List<GameObject>();
+        bets = new List<int>[37];
+        for (int i = 0; i < bets.Length; i++)
+        {
+            bets[i] = new List<int>();
+        }//end for
         colors = new int[37];
         order = new int[37];
 
@@ -37,7 +43,7 @@ public class RouletteGame : MonoBehaviour
         {
             Destroy(storedNodes[i]);
         }//end for
-
+        bets = new List<int>[0];
         colors = new int[0];
         order = new int[0];
     }//end setSelf

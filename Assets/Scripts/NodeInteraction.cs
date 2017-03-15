@@ -27,7 +27,7 @@ public class NodeInteraction : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            GetComponent<Renderer>().enabled = false;
+            //GetComponent<Renderer>().enabled = false;
 
             for(int i = 0; i < values.Count; i++)
             {
