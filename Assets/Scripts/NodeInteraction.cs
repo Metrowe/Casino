@@ -41,6 +41,13 @@ public class NodeInteraction : MonoBehaviour
         GetComponent<Renderer>().enabled = false;
     }//end OnMouseExit
 
+	/*
+	 public Texture texture; // assign in inspector, this is a field.
+ 
+	 GameObject go = Instantiate(somePrefab, someTransform, someRotation);
+	 go.renderer.material.mainTexture = texture;
+	 */
+
     /*
     void OnMouseEnter()
     {
