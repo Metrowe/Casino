@@ -13,20 +13,17 @@ public class MouseLook : MonoBehaviour
 
     GameObject character;
 
-    // Use this for initialization
     void Start()
     {
         character = this.transform.parent.gameObject;
     }
 
-    // Update is called once per frame
     void LateUpdate()
     {
         if (!transform.parent.GetComponent<CharacterController>().inGame)
         {
             var md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 
-            //if (md.y > 0 && transform.eulerAngles.x < -85 && transform.eulerAngles.x > -175)
             if (md.y > 0 && transform.eulerAngles.x < 315 && transform.eulerAngles.x > 270 || md.y < 0 && transform.eulerAngles.x < 90 && transform.eulerAngles.x > 45)
             {
                 md.y = 0;
