@@ -11,7 +11,7 @@ public class CharacterController : MonoBehaviour
     private float speed;
 
     public Camera[] cameras;
-    public int currentCameraIndex;
+    private int currentCameraIndex;
     private int tempCameraIndex;
     public Text StartGameText;
 

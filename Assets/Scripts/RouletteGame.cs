@@ -8,18 +8,17 @@ using UnityEngine;
 public class RouletteGame : MonoBehaviour
 {
     public GameObject BetNode;
+    public GameObject[] chipTypes = new GameObject[7];
     private Vector3 fix = new Vector3(-0.354f, 1.11f, -0.739f);
     private Vector3 grid = new Vector3(0.175f, 0.001f, 0.135f);
+
+    //public int currentBet;
+    public int currentBet = 5;
 
     private List<GameObject> storedNodes;
     private List<int>[] bets;
     private int[] colors;
     private int[] order;
-
-    void Start()
-    {
-
-    }//end Start
 
     public void startSelf()
     {
@@ -48,11 +47,45 @@ public class RouletteGame : MonoBehaviour
         order = new int[0];
     }//end setSelf
 
-    // Update is called once per frame
     void Update ()
     {
-		
-	}//end Update
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            resetBets();
+        }//end if
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            displayBets();
+        }//end if
+    }//end Update
+
+    public void makeBet(List<int> values, int payout)
+    {
+
+        for( int i = 0; i < values.Count; i++)
+        {
+            int index = values[i];
+
+            bets[index].Add(payout);
+        }//end for
+    }//end makeBet
+
+    void resetBets()
+    {
+        for (int i = 0; i < bets.Length; i++)
+        {
+            bets[i].Clear();
+        }//end for
+    }//end resetBets
+
+    void displayBets()
+    {
+        for (int i = 0; i < bets.Length; i++)
+        {
+            Debug.Log("Bets[" + i + "].Count = " + bets[i].Count);
+        }//end for
+    }//end resetBets
 
     void readNumberArray()
     {
@@ -86,17 +119,7 @@ public class RouletteGame : MonoBehaviour
         }//end while
 
         file.Close();
-
-        for (int i = 0; i < colors.Length; i++)
-        {
-            Debug.Log("colors[" + i + "] = " + colors[i]);
-        }//end for
-        /*
-        for(int i = 0; i < order.Length; i++)
-        {
-            Debug.Log("order[" + i + "] = " + order[i]);
-        }//end for
-        */
+        
     }//end readNumberArray
 
     void buildNode(float px, float py, float pz, float sx, float sy, float sz, List<int> tempList, int pay)
@@ -355,6 +378,18 @@ public class RouletteGame : MonoBehaviour
 
     }//end buildAllNodes
 }//end RouletteGame
+
+/*
+        for (int i = 0; i < colors.Length; i++)
+        {
+            Debug.Log("colors[" + i + "] = " + colors[i]);
+        }//end for
+        
+        for(int i = 0; i < order.Length; i++)
+        {
+            Debug.Log("order[" + i + "] = " + order[i]);
+        }//end for
+*/
 
 /*
         List<int> tempListA;
