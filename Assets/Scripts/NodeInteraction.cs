@@ -6,8 +6,8 @@ public class NodeInteraction : MonoBehaviour
 {
     public List<int> values;
     public int payout;
-    private int stackValue;
-    private GameObject chipStack;
+    public int stackValue;
+    public GameObject chipStack;
     //private GameObject chipStack = new GameObject();
 
     void objectStart()
@@ -36,6 +36,9 @@ public class NodeInteraction : MonoBehaviour
             int total = payout * temp.GetComponent<RouletteGame>().currentBet + temp.GetComponent<RouletteGame>().currentBet;
             temp.GetComponent<RouletteGame>().makeBet(values, total );
 
+            stackValue += temp.GetComponent<RouletteGame>().currentBet;
+
+            buildChipStack();
             //GetComponent<Renderer>().enabled = false;
 
             for (int i = 0; i < values.Count; i++)
@@ -56,20 +59,89 @@ public class NodeInteraction : MonoBehaviour
         //chipTypes = temp.GetComponent<RouletteGame>().chipTypes;
         //GameObject[] chipTypes = temp.GetComponent<RouletteGame>().chipTypes;
         Destroy(chipStack);
+
+        Debug.Log("entered buildChipStack");
+        
         chipStack = new GameObject();
+        chipStack.transform.parent = this.transform;
+
+        chipStack.transform.localPosition = new Vector3(0, 0, 0);
+        chipStack.transform.localRotation = new Quaternion();
+        
+        Debug.Log("created chipStack");
+        
+        float dist = 0.01f;
+        int stackIndex = 0;
+        int tempValue = stackValue;
+
+        Debug.Log("about to enter first while");
+        while (tempValue >= 1000)
+        {
+            Debug.Log("stackIndex = " + stackIndex);
+            buildChip(stackIndex * dist, 6);
+            stackIndex++;
+            tempValue -= 1000;
+        }//end while
+
+        //Debug.Log(tempValue);
+        
+        while (tempValue >= 500)
+        {
+            buildChip(stackIndex * dist, 5);
+            stackIndex++;
+            tempValue -= 500;
+        }//end while
+
+        while (tempValue >= 100)
+        {
+            buildChip(stackIndex * dist, 4);
+            stackIndex++;
+            tempValue -= 100;
+        }//end while
+
+        while (tempValue >= 50)
+        {
+            buildChip(stackIndex * dist, 3);
+            stackIndex++;
+            tempValue -= 50;
+        }//end while
+
+        while (tempValue >= 10)
+        {
+            buildChip(stackIndex * dist, 2);
+            stackIndex++;
+            tempValue -= 10;
+        }//end while
+        
+        while (tempValue >= 5)
+        {
+            buildChip(stackIndex * dist, 1);
+            stackIndex++;
+            tempValue -= 5;
+        }//end while
+        
+        while (tempValue >= 1)
+        {
+            buildChip(stackIndex * dist, 0);
+            stackIndex++;
+            tempValue -= 1;
+        }//end while
 
     }//end buildChipStack
 
     void buildChip(float height, int prefabIndex)
     {
-        GameObject temp = GameObject.Find("Roulette");
-        GameObject[] chipTypes = temp.GetComponent<RouletteGame>().chipTypes;
+        //GameObject temp = GameObject.Find("Roulette");
+        //GameObject[] chipTypes = temp.GetComponent<RouletteGame>().chipTypes;
 
-        GameObject localNode = Instantiate(chipTypes[prefabIndex]) as GameObject;
-        localNode.transform.parent = chipStack.transform;
-        localNode.transform.localPosition = new Vector3(0, height, 0);
+        //GameObject localChip = Instantiate(chipTypes[prefabIndex]) as GameObject;
+
+        GameObject localChip = Instantiate(     GameObject.Find("Roulette").GetComponent<RouletteGame>().chipTypes[prefabIndex]) as GameObject;
+
+        localChip.transform.parent = chipStack.transform;
+        localChip.transform.localPosition = new Vector3(0, height, 0);
         //localNode.transform.localScale = new Vector3(sx * grid.x, sy * grid.y, sz * grid.z);
-        localNode.transform.localRotation = new Quaternion();
+        localChip.transform.localRotation = new Quaternion();
 
         //localNode.GetComponent<NodeInteraction>().values = tempList;
         //localNode.GetComponent<NodeInteraction>().payout = pay;

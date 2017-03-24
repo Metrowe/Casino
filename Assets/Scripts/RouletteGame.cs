@@ -132,6 +132,8 @@ public class RouletteGame : MonoBehaviour
 
         localNode.GetComponent<NodeInteraction>().values = tempList;
         localNode.GetComponent<NodeInteraction>().payout = pay;
+        localNode.GetComponent<NodeInteraction>().stackValue = 0;
+        //localNode.GetComponent<NodeInteraction>().chipStack = new GameObject();
         storedNodes.Add(localNode);
 
         if (localNode == null)
