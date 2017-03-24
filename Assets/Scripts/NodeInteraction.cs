@@ -142,6 +142,7 @@ public class NodeInteraction : MonoBehaviour
         localChip.transform.localPosition = new Vector3(0, height, 0);
         //localNode.transform.localScale = new Vector3(sx * grid.x, sy * grid.y, sz * grid.z);
         localChip.transform.localRotation = new Quaternion();
+        localChip.GetComponent<Collider>().enabled = false;
 
         //localNode.GetComponent<NodeInteraction>().values = tempList;
         //localNode.GetComponent<NodeInteraction>().payout = pay;
