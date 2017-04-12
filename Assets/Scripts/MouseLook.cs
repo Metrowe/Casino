@@ -17,10 +17,10 @@ public class MouseLook : MonoBehaviour
     {
         character = this.transform.parent.gameObject;
     }
-
+    
     void LateUpdate()
     {
-        if (!transform.parent.GetComponent<CharacterController>().inGame)
+        if (!transform.parent.GetComponent<CharacterControl>().inGame)
         {
             var md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 

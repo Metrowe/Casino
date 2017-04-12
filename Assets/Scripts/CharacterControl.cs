@@ -1,9 +1,13 @@
-﻿using System.Collections;
+﻿/*
+Debug.LogError("Message");
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterController : MonoBehaviour
+public class CharacterControl: MonoBehaviour
 {
     //public float speed;
     public bool inGame;
@@ -15,9 +19,13 @@ public class CharacterController : MonoBehaviour
     private int tempCameraIndex;
     public Text StartGameText;
 
+    public int wallet;
+
     // Use this for initialization
     void Start()
     {
+        wallet = 300;
+
         Cursor.lockState = CursorLockMode.Locked;
         speed = 7.0f;
         inGame = false;
@@ -65,7 +73,7 @@ public class CharacterController : MonoBehaviour
                 }//end case 3
                 default:
                 {
-
+                    Debug.LogError("Invalid Camera Index");
                     break;
                 }//end default
             }//end switch

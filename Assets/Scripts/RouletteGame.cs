@@ -8,7 +8,9 @@ using UnityEngine;
 public class RouletteGame : MonoBehaviour
 {
     public GameObject BetNode;
-    public GameObject[] chipTypes = new GameObject[7];
+    //public GameObject BaseChip;
+
+    //public GameObject[] chipTypes = new GameObject[7];
     private Vector3 fix = new Vector3(-0.354f, 1.11f, -0.739f);
     private Vector3 grid = new Vector3(0.175f, 0.001f, 0.135f);
 
@@ -34,7 +36,7 @@ public class RouletteGame : MonoBehaviour
         readNumberArray();
         buildAllNodes();
         
-    }//end setSelf
+    }//end startSelf
 
     public void endSelf()
     {
@@ -45,7 +47,7 @@ public class RouletteGame : MonoBehaviour
         bets = new List<int>[0];
         colors = new int[0];
         order = new int[0];
-    }//end setSelf
+    }//end endSelf
 
     void Update ()
     {
@@ -58,7 +60,27 @@ public class RouletteGame : MonoBehaviour
         {
             displayBets();
         }//end if
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            winBet(0);
+
+            //GameObject tempPlayer = GameObject.Find("Player");
+            Debug.Log("Wallet = " + GameObject.Find("Player").GetComponent<CharacterControl>().wallet);
+        }//end if
     }//end Update
+
+    void winBet(int windex)
+    {
+        //GameObject tempPlayer = GameObject.Find("Player");
+
+        for (int i = 0; i < bets[windex].Count; i++)
+        {
+            GameObject.Find("Player").GetComponent<CharacterControl>().wallet += bets[windex][i];
+        }//end for
+
+        resetBets();
+    }//end winBet
 
     public void makeBet(List<int> values, int payout)
     {
@@ -76,6 +98,12 @@ public class RouletteGame : MonoBehaviour
         for (int i = 0; i < bets.Length; i++)
         {
             bets[i].Clear();
+        }//end for
+
+        for (int i = storedNodes.Count - 1; i > -1; i--)
+        {
+            Destroy(storedNodes[i].GetComponent<NodeInteraction>().chipStack);
+            storedNodes[i].GetComponent<NodeInteraction>().stackValue = 0;
         }//end for
     }//end resetBets
 
@@ -132,7 +160,9 @@ public class RouletteGame : MonoBehaviour
 
         localNode.GetComponent<NodeInteraction>().values = tempList;
         localNode.GetComponent<NodeInteraction>().payout = pay;
-        localNode.GetComponent<NodeInteraction>().stackValue = 0;
+
+        localNode.GetComponent<NodeInteraction>().objectStart();
+        //localNode.GetComponent<NodeInteraction>().stackValue = 0;
         //localNode.GetComponent<NodeInteraction>().chipStack = new GameObject();
         storedNodes.Add(localNode);
 
