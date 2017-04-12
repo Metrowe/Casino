@@ -140,7 +140,7 @@ public class CharacterControl: MonoBehaviour
 
     void startGame()
     {
-        GameObject temp;
+		GameObject temp;
 
         switch (currentCameraIndex)
         {
@@ -149,12 +149,14 @@ public class CharacterControl: MonoBehaviour
                     //ScriptName sn = gameObject.GetComponent<ScriptName>()
                     //sn.DoSomething();
                     temp = GameObject.Find("Roulette");
-                    temp.GetComponent<RouletteGame>().startSelf();
+				temp.GetComponent<RouletteGame>().startSelf();
                 break;
             }//end case 1
             case 2:
             {
 
+				temp = GameObject.Find("Slots");
+				temp.GetComponent<Slotgame>().startSelf();
                 break;
             }//end case 2
             case 3:
@@ -184,7 +186,8 @@ public class CharacterControl: MonoBehaviour
             }//end case 1
             case 2:
             {
-
+				/*temp = GameObject.Find ("Slots");
+				temp.GetComponent<Slotgame>().endSelf ();*/
                 break;
             }//end case 2
             case 3:
