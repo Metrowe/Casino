@@ -59,12 +59,13 @@ public class CharacterControl: MonoBehaviour
                 case 1:
                 {
 
-                    break;
+                        break;
                 }//end case 1
                 case 2:
                 {
+                        GameObject.Find("Slots").GetComponent<Slotgame>().startSelf();
+                        break;
 
-                    break;
                 }//end case 2
                 case 3:
                 {
