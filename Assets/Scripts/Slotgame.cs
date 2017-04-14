@@ -4,40 +4,52 @@ using UnityEngine;
 
 public class Slotgame : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-        
-	}
+    // Use this for initialization
+    void Start() {
 
-    public float smooth = 2.0f;
-    public float tilt = 30.0f;
+    }
 
     public void startSelf()
-	{
-        float spinArmZ = -Input.GetAxis("Fire1") * tilt;
+    {
+    }
+
+    bool slot = false;
+    bool spin = false;
+
+    public void updateSelf()
+    {
+
+        float smooth = 2.0f;
+        float tilt = 30.0f;
+       float spinArmZ = 0;
+    
+        if (spin == false)
+        {
+           spinArmZ = -Input.GetAxis("Fire1") * tilt;
+        }
+
         GameObject cur = GameObject.Find("Arm");
-        Quaternion target = Quaternion.Euler(0, 0, spinArmZ*3 );
+        Quaternion target = Quaternion.Euler(0, 0, spinArmZ * 3);
         cur.transform.rotation = Quaternion.Slerp(cur.transform.rotation, target, Time.deltaTime * smooth);
 
-        //print(cur.transform.eulerAngles.z);
-
-       if(cur.transform.eulerAngles.z < 280 && cur.transform.eulerAngles.z > 0)
-       {
+        if (cur.transform.eulerAngles.z < 280 && cur.transform.eulerAngles.z > 0)
+        {
+            spin = true;
             wheelspin();
-       }
+        }
     }
 
-    public void wheelspin()
+    void wheelspin()
     {
-        print("Works");
+         print("Work");
     }
 
 
-	void Update () {
+	//void Update () {
 
  
       
        
-		}
+		
 	
 }

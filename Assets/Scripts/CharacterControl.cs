@@ -63,7 +63,7 @@ public class CharacterControl: MonoBehaviour
                 }//end case 1
                 case 2:
                 {
-                        GameObject.Find("Slots").GetComponent<Slotgame>().startSelf();
+                        GameObject.Find("Slots").GetComponent<Slotgame>().updateSelf();
                         break;
 
                 }//end case 2
