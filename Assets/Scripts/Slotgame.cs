@@ -37,26 +37,44 @@ public class Slotgame : MonoBehaviour {
         Quaternion target = Quaternion.Euler(0, 0, spinArmZ * 3);
         cur.transform.rotation = Quaternion.Slerp(cur.transform.rotation, target, Time.deltaTime * smooth);
 
-        if (cur.transform.eulerAngles.z < 280 && cur.transform.eulerAngles.z > 0)
+        if (spin == false && cur.transform.eulerAngles.z < 280 && cur.transform.eulerAngles.z > 0)
         {
             spin = true;
-            wheelspin();
+            Invoke("wheelspin", 1);
         }
     }
 
-    void wheelspin()
+    public void wheelspin()
     {
+
+        ///////////
+        print("Entering wheel spin");
+        ///////////
+
         result = new int[3];
 
         GameObject wheel1 = GameObject.Find("Rotatey thing 1");
         GameObject wheel2 = GameObject.Find("Rotatey thing 2");
         GameObject wheel3 = GameObject.Find("Rotatey thing 3");
 
-
-        for (int i = 0 ; i < 3 ; i++ )
+        if (losses < 5)
         {
-            result[i] = Random.Range(0, 3);
+            for (int i = 0; i < 3; i++)
+            {
+                result[i] = Random.Range(0, 3);
+            }
+
         }
+
+        if (losses > 5)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                result[3] = 0;
+            }
+        }
+
+        print("Results are  ");
 
         for (int i = 0; i < 3; i++)
         {
@@ -68,23 +86,26 @@ public class Slotgame : MonoBehaviour {
             print("Jackpot");
             losses = 0;
             print(losses);
-            
+            spin = false;
         }
 
-        if (result[0] != result[1])
+        if (result[0] != result[1] || result[0] != result[2] || result[1] != result[2])
         {
             print("No prize :(");
             losses++;
+            print("Losses are");
             print(losses);
+            spin = false;
         }
 
-        spin = false;
-
+        ///////////
+        print("Leaving wheel spin");
+        ///////////
 
     }
- 
-      
-       
-		
-	
+
+
+
+
+
 }
