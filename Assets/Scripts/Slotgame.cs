@@ -11,17 +11,22 @@ public class Slotgame : MonoBehaviour {
 
     public void startSelf()
     {
+        //result = new int [3];
+
     }
 
     bool slot = false;
     bool spin = false;
-
+    int losses = 0;
+    
+    public int [] result;
+    
     public void updateSelf()
     {
 
         float smooth = 2.0f;
         float tilt = 30.0f;
-       float spinArmZ = 0;
+        float spinArmZ = 0;
     
         if (spin == false)
         {
@@ -41,12 +46,42 @@ public class Slotgame : MonoBehaviour {
 
     void wheelspin()
     {
-         print("Work");
+        result = new int[3];
+
+        GameObject wheel1 = GameObject.Find("Rotatey thing 1");
+        GameObject wheel2 = GameObject.Find("Rotatey thing 2");
+        GameObject wheel3 = GameObject.Find("Rotatey thing 3");
+
+
+        for (int i = 0 ; i < 3 ; i++ )
+        {
+            result[i] = Random.Range(0, 3);
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            print(result[i]);
+        }
+
+        if (result[0] == result[1] && result[1] == result[2])
+        {
+            print("Jackpot");
+            losses = 0;
+            print(losses);
+            
+        }
+
+        if (result[0] != result[1])
+        {
+            print("No prize :(");
+            losses++;
+            print(losses);
+        }
+
+        spin = false;
+
+
     }
-
-
-	//void Update () {
-
  
       
        
