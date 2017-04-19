@@ -8,14 +8,15 @@ using UnityEngine;
 public class RouletteGame : MonoBehaviour
 {
     public GameObject BetNode;
-    //public GameObject BaseChip;
+    public GameObject BaseChip;
 
     //public GameObject[] chipTypes = new GameObject[7];
     private Vector3 fix = new Vector3(-0.354f, 1.11f, -0.739f);
     private Vector3 grid = new Vector3(0.175f, 0.001f, 0.135f);
 
     //public int currentBet;
-    public int currentBet = 5;
+    public int betIndex;
+    public int[] betAmount;
 
     private List<GameObject> storedNodes;
     private List<int>[] bets;
@@ -35,7 +36,10 @@ public class RouletteGame : MonoBehaviour
 
         readNumberArray();
         buildAllNodes();
-        
+
+        betAmount = new int[] { 1, 5, 10, 50, 100, 500, 1000 };
+        betIndex = 2;
+
     }//end startSelf
 
     public void endSelf()
@@ -48,6 +52,37 @@ public class RouletteGame : MonoBehaviour
         colors = new int[0];
         order = new int[0];
     }//end endSelf
+
+    public void increaseBet(bool IncOrDec)
+    {
+        if(IncOrDec)
+        {
+            if(betIndex < betAmount.Length - 1)
+            {
+                betIndex++;
+                print(betIndex);
+
+            }//end if
+            else
+            {
+                print("MAXBET ERROR MESSAGE");
+                //MAXBET ERROR MESSAGE?
+            }//end else
+        }//end if
+        else
+        {
+            if (betIndex > 0)
+            {
+                betIndex--;
+                print(betIndex);
+            }//end if
+            else
+            {
+                print("MINBET ERROR MESSAGE");
+                //MINBET ERROR MESSAGE?
+            }//end else
+        }
+    }//end increaseBet
 
     void Update ()
     {
@@ -73,14 +108,32 @@ public class RouletteGame : MonoBehaviour
     void winBet(int windex)
     {
         //GameObject tempPlayer = GameObject.Find("Player");
+        int tempWallet = GameObject.Find("Player").GetComponent<CharacterControl>().wallet;
 
         for (int i = 0; i < bets[windex].Count; i++)
         {
             GameObject.Find("Player").GetComponent<CharacterControl>().wallet += bets[windex][i];
         }//end for
 
+        List<int> chipdexes = BaseChip.GetComponent<ChipDynamics>().minList(GameObject.Find("Player").GetComponent<CharacterControl>().wallet - tempWallet);
+
+        for (int i = 0; i < chipdexes.Count; i++)
+        {
+            buildChip(chipdexes[i]);
+        }//end for
+
         resetBets();
     }//end winBet
+
+    void buildChip(int typeIndex)
+    {
+        GameObject localChip = Instantiate(BaseChip) as GameObject;
+
+        localChip.GetComponent<ChipDynamics>().physicsChip(typeIndex, transform.position + new Vector3(0, 1.15f, 0), new Quaternion());
+
+        //localChip.transform.localPosition = new Vector3(0, height, 0);
+        //localChip.transform.localRotation = new Quaternion();
+    }//end buildChip
 
     public void makeBet(List<int> values, int payout)
     {

@@ -26,11 +26,26 @@ public class ChipDynamics : MonoBehaviour
         //transform.Rotate(theta);
 
         GetComponent<Collider>().enabled = false;
+        //GetComponent<Rigidbody>().enabled = false;
+        GetComponent<Rigidbody>().isKinematic = true;
+        //rigidbody.velocity = Vector3.zero;
     }//end staticChip
 
-    public void physicsChip(int index)
+    public void physicsChip(int index, Vector3 pos, Quaternion theta)
     {
         assignValue(index);
+
+        this.transform.localPosition = pos;
+        this.transform.localRotation = theta;
+
+        GetComponent<Rigidbody>().velocity = new Vector3(       Random.Range(-2,2),  1, Random.Range(-2, 2)     );
+        Destroy(this.gameObject, 5);
+    }//end physicsChip
+
+    public void physicsChipRandom(int index)
+    {
+        assignValue(index);
+        //Destroy(this.gameObject, 5);
     }//end physicsChip
 
     public List<int> minList(int total)

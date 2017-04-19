@@ -39,18 +39,18 @@ public class NodeInteraction : MonoBehaviour
         {
             GameObject tempGame = GameObject.Find("Roulette");
             GameObject tempPlayer = GameObject.Find("Player");
+            int currentBet = tempGame.GetComponent<RouletteGame>().betAmount[tempGame.GetComponent<RouletteGame>().betIndex];
 
-            if(tempPlayer.GetComponent<CharacterControl>().wallet >= tempGame.GetComponent<RouletteGame>().currentBet)
+            if (tempPlayer.GetComponent<CharacterControl>().wallet >= currentBet)
             {
-                tempPlayer.GetComponent<CharacterControl>().wallet -= tempGame.GetComponent<RouletteGame>().currentBet;
+                tempPlayer.GetComponent<CharacterControl>().wallet -= currentBet;
 
-                int total = payout * tempGame.GetComponent<RouletteGame>().currentBet + tempGame.GetComponent<RouletteGame>().currentBet;
+                int total = (payout * currentBet) + currentBet;
                 tempGame.GetComponent<RouletteGame>().makeBet(values, total);
 
-                stackValue += tempGame.GetComponent<RouletteGame>().currentBet;
+                stackValue += currentBet;
 
                 buildChipStack();
-                //GetComponent<Renderer>().enabled = false;
 
                 for (int i = 0; i < values.Count; i++)
                 {
@@ -71,9 +71,6 @@ public class NodeInteraction : MonoBehaviour
 
     void buildChipStack()
     {
-        //GameObject temp = GameObject.Find("Roulette");
-        //chipTypes = temp.GetComponent<RouletteGame>().chipTypes;
-        //GameObject[] chipTypes = temp.GetComponent<RouletteGame>().chipTypes;
         Destroy(chipStack);
 
         Debug.Log("entered buildChipStack");
@@ -88,133 +85,110 @@ public class NodeInteraction : MonoBehaviour
         Debug.Log("created chipStack");
         
         float dist = 0.01f;
-        float stackIndex = 0.5f;
-        int tempValue = stackValue;
+        //int tempValue = stackValue;
 
-        Debug.Log("about to enter first while");
-        while (tempValue >= 1000)
-        {
-            Debug.Log("stackIndex = " + stackIndex);
-            buildChip(  stackIndex * dist, 6);
-            stackIndex++;
-            tempValue -= 1000;
-        }//end while
+        List<int> chipdexes = BaseChip.GetComponent<ChipDynamics>().minList(stackValue);
 
-        //Debug.Log(tempValue);
-        
-        while (tempValue >= 500)
+        for(int i = 0; i < chipdexes.Count; i++)
         {
-            buildChip(stackIndex * dist, 5);
-            stackIndex++;
-            tempValue -= 500;
-        }//end while
-
-        while (tempValue >= 100)
-        {
-            buildChip(stackIndex * dist, 4);
-            stackIndex++;
-            tempValue -= 100;
-        }//end while
-
-        while (tempValue >= 50)
-        {
-            buildChip(stackIndex * dist, 3);
-            stackIndex++;
-            tempValue -= 50;
-        }//end while
-
-        while (tempValue >= 10)
-        {
-            buildChip(stackIndex * dist, 2);
-            stackIndex++;
-            tempValue -= 10;
-        }//end while
-        
-        while (tempValue >= 5)
-        {
-            buildChip(stackIndex * dist, 1);
-            stackIndex++;
-            tempValue -= 5;
-        }//end while
-        
-        while (tempValue >= 1)
-        {
-            buildChip(stackIndex * dist, 0);
-            stackIndex++;
-            tempValue -= 1;
-        }//end while
-
+            buildChip(dist * (i + 0.5f), chipdexes[i]);
+        }//end for
     }//end buildChipStack
 
     void buildChip(float height, int typeIndex)
     {
-        //GameObject temp = GameObject.Find("Roulette");
-        //GameObject[] chipTypes = temp.GetComponent<RouletteGame>().chipTypes;
-
-        //GameObject localChip = Instantiate(chipTypes[prefabIndex]) as GameObject;
-
         GameObject localChip = Instantiate(BaseChip) as GameObject;
 
-
         localChip.transform.parent = chipStack.transform;
-        //localChip.transform.localPosition = new Vector3(0, height, 0);
-        //localNode.transform.localScale = new Vector3(sx * grid.x, sy * grid.y, sz * grid.z);
-        //localChip.transform.localRotation = new Quaternion();
-
         localChip.GetComponent<ChipDynamics>().staticChip(typeIndex, new Vector3(0, height, 0), new Quaternion());
-        //localChip.GetComponent<ChipDynamics>().assignValue(typeIndex);
 
+        //localChip.transform.localPosition = new Vector3(0, height, 0);
+        //localChip.transform.localRotation = new Quaternion();
+    }//end buildChip
+}//end NodeInteraction
 
-        //GameObject localChip = Instantiate(     GameObject.Find("Roulette").GetComponent<RouletteGame>().chipTypes[typeIndex]) as GameObject;
+/*
+ public Texture texture; // assign in inspector, this is a field.
 
-        localChip.transform.parent = chipStack.transform;
-        localChip.transform.localPosition = new Vector3(0, height, 0);
-        //localNode.transform.localScale = new Vector3(sx * grid.x, sy * grid.y, sz * grid.z);
-        localChip.transform.localRotation = new Quaternion();
-        //localChip.GetComponent<Collider>().enabled = false;
+ GameObject go = Instantiate(somePrefab, someTransform, someRotation);
+ go.renderer.material.mainTexture = texture;
+ */
 
-        //localNode.GetComponent<NodeInteraction>().values = tempList;
-        //localNode.GetComponent<NodeInteraction>().payout = pay;
-        //storedNodes.Add(localNode);
+/*
+void OnMouseEnter()
+{
+    GetComponent<Renderer>().enabled = true;
+}//end OnMouseEnter
 
-        /*
-        if (localNode == null)
-        {
-            Debug.LogWarning("LocalNode somehow isnt fudging created?");
-        }//end if
-        */
-    }//end buildNode
-
-    
-
-     /*
-      public Texture texture; // assign in inspector, this is a field.
-
-      GameObject go = Instantiate(somePrefab, someTransform, someRotation);
-      go.renderer.material.mainTexture = texture;
-      */
-
-    /*
-    void OnMouseEnter()
+void OnMouseOver()
+{
+    if (Input.GetMouseButtonDown(0))
     {
-        GetComponent<Renderer>().enabled = true;
-    }//end OnMouseEnter
+        GetComponent<Renderer>().enabled = false;
+    }//end if
+}//end OnMouseOver
 
-    void OnMouseOver()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            GetComponent<Renderer>().enabled = false;
-        }//end if
-    }//end OnMouseOver
+void OnMouseExit()
+{
+    //GetComponent<Renderer>().enabled = false;
+    GetComponent<Renderer>().enabled = true;
+}//end OnMouseExit
+*/
 
-    void OnMouseExit()
+/*
+    Debug.Log("about to enter first while");
+    while (tempValue >= 1000)
     {
-        //GetComponent<Renderer>().enabled = false;
-        GetComponent<Renderer>().enabled = true;
-    }//end OnMouseExit
+        Debug.Log("stackIndex = " + stackIndex);
+        buildChip(  stackIndex * dist, 6);
+        stackIndex++;
+        tempValue -= 1000;
+    }//end while
+
+    //Debug.Log(tempValue);
+
+    while (tempValue >= 500)
+    {
+        buildChip(stackIndex * dist, 5);
+        stackIndex++;
+        tempValue -= 500;
+    }//end while
+
+    while (tempValue >= 100)
+    {
+        buildChip(stackIndex * dist, 4);
+        stackIndex++;
+        tempValue -= 100;
+    }//end while
+
+    while (tempValue >= 50)
+    {
+        buildChip(stackIndex * dist, 3);
+        stackIndex++;
+        tempValue -= 50;
+    }//end while
+
+    while (tempValue >= 10)
+    {
+        buildChip(stackIndex * dist, 2);
+        stackIndex++;
+        tempValue -= 10;
+    }//end while
+
+    while (tempValue >= 5)
+    {
+        buildChip(stackIndex * dist, 1);
+        stackIndex++;
+        tempValue -= 5;
+    }//end while
+
+    while (tempValue >= 1)
+    {
+        buildChip(stackIndex * dist, 0);
+        stackIndex++;
+        tempValue -= 1;
+    }//end while
     */
 
-    /////////////gameObject.GetComponent<Renderer>().material.color = new Color(0, 0, 255);
+/////////////gameObject.GetComponent<Renderer>().material.color = new Color(0, 0, 255);
 
-}//end NodeInteraction
