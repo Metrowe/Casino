@@ -35,9 +35,11 @@ public class NodeInteraction : MonoBehaviour
 
     void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(0))
+        GameObject tempGame = GameObject.Find("Roulette");
+
+        if (Input.GetMouseButtonDown(0) && !tempGame.GetComponent<RouletteGame>().spinning)
         {
-            GameObject tempGame = GameObject.Find("Roulette");
+            //GameObject tempGame = GameObject.Find("Roulette");
             GameObject tempPlayer = GameObject.Find("Player");
             int currentBet = tempGame.GetComponent<RouletteGame>().betAmount[tempGame.GetComponent<RouletteGame>().betIndex];
 

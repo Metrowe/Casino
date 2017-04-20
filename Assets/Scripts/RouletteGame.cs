@@ -23,6 +23,8 @@ public class RouletteGame : MonoBehaviour
     private int[] colors;
     private int[] order;
 
+    public bool spinning;
+
     public void startSelf()
     {
         storedNodes = new List<GameObject>();
@@ -39,6 +41,8 @@ public class RouletteGame : MonoBehaviour
 
         betAmount = new int[] { 1, 5, 10, 50, 100, 500, 1000 };
         betIndex = 2;
+
+        spinning = false;
 
     }//end startSelf
 
@@ -84,8 +88,26 @@ public class RouletteGame : MonoBehaviour
         }
     }//end increaseBet
 
-    void Update ()
+    public void startSpin()
     {
+        if(!spinning)
+        {
+            spinning = true;
+            GameObject.Find("Wheel V4").GetComponent<WheelMovement>().theta = 5;
+
+
+        }//end if
+    }//end startSpin
+
+    //void Update ()
+    public void updateSelf()
+    {
+        if(spinning)
+        {
+            GameObject.Find("Wheel V4").GetComponent<WheelMovement>().updateSelf();
+
+        }//end if
+
         if (Input.GetKeyDown(KeyCode.X))
         {
             resetBets();
@@ -103,10 +125,11 @@ public class RouletteGame : MonoBehaviour
             //GameObject tempPlayer = GameObject.Find("Player");
             Debug.Log("Wallet = " + GameObject.Find("Player").GetComponent<CharacterControl>().wallet);
         }//end if
-    }//end Update
+    }//end updateSelf
 
-    void winBet(int windex)
+    public void winBet(int windex)
     {
+        spinning = false;
         //GameObject tempPlayer = GameObject.Find("Player");
         int tempWallet = GameObject.Find("Player").GetComponent<CharacterControl>().wallet;
 

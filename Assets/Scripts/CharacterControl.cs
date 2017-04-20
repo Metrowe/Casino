@@ -58,8 +58,8 @@ public class CharacterControl: MonoBehaviour
             {
                 case 1:
                 {
-
-                    break;
+                        GameObject.Find("Roulette").GetComponent<RouletteGame>().updateSelf();
+                        break;
                 }//end case 1
                 case 2:
                 {
