@@ -6,7 +6,7 @@ public class Slotgame : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-
+        originalrotation = transform.rotation;
     }
 
     public void startSelf()
@@ -18,15 +18,22 @@ public class Slotgame : MonoBehaviour {
     bool slot = false;
     bool spin = false;
     int losses = 0;
+
+    public Quaternion originalrotation;
+    public Quaternion jackpot;
+    public Quaternion pupper;
+    public Quaternion sevens;
+    public Quaternion grape;
+
+    public float resetspeed = 1.0f ;
     
     public int [] result;
-    
+
     public void updateSelf()
     {
-
+        float spinArmZ = 0;
         float smooth = 2.0f;
         float tilt = 30.0f;
-        float spinArmZ = 0;
     
         if (spin == false)
         {
@@ -62,6 +69,7 @@ public class Slotgame : MonoBehaviour {
             for (int i = 0; i < 3; i++)
             {
                 result[i] = Random.Range(0, 3);
+
             }
 
         }
@@ -73,6 +81,47 @@ public class Slotgame : MonoBehaviour {
                 result[3] = 0;
             }
         }
+
+        if (result[0] == 0)
+        {
+            for (int i = 0; i < 50 + 360; i++)
+            {
+                wheel1.transform.Rotate(0, 1, 0);
+          
+            }
+        }
+
+        if (result[1] == 0)
+        {
+            for (int i = 0; i < 50 + 360; i++)
+            {
+                wheel2.transform.Rotate(0, 1, 0);
+
+            }
+        }
+
+        if (result[2] == 0)
+        {
+            for (int i = 0; i < 50 + 360; i++)
+            {
+                wheel3.transform.Rotate(0, 1, 0);
+
+            }
+        }
+
+        
+
+
+        /*if (result[0] == 0)
+        {
+            Quaternion spin = Quaternion.Euler(25, 0, 0);
+            wheel1.transform.rotation = Quaternion.Slerp(wheel1.transform.rotation, spin, Time.deltaTime * 30.0f);
+        }
+        if (result[1] == 0)
+        {
+            Quaternion spin = Quaternion.Euler(25, 0, 0);
+            wheel2.transform.rotation = Quaternion.Slerp(wheel2.transform.rotation, spin, Time.deltaTime * 30.0f);
+        }*/
 
         print("Results are  ");
 
@@ -98,14 +147,23 @@ public class Slotgame : MonoBehaviour {
             spin = false;
         }
 
+        StartCoroutine(Wait(3.0f));
+
+
+        wheel1.transform.localRotation = Quaternion.Slerp(wheel1.transform.rotation, originalrotation, Time.time * resetspeed);
+        //wheel1.transform.rotation = Quaternion.Slerp(wheel1.transform.rotation, originalrotation, Time.time * resetspeed);
+        wheel2.transform.rotation = Quaternion.Slerp(wheel2.transform.rotation, originalrotation, Time.time * resetspeed);
+        wheel3.transform.rotation = Quaternion.Slerp(wheel3.transform.rotation, originalrotation, Time.time * resetspeed);
+
         ///////////
         print("Leaving wheel spin");
         ///////////
 
     }
 
-
-
-
+    private IEnumerator Wait(float waitTime)
+    {
+        yield return new WaitForSeconds(2);
+    }
 
 }
