@@ -71,8 +71,8 @@ public class CharacterControl: MonoBehaviour
                 }//end case 1
                 case 2:
                 {
-
-                    break;
+                        GameObject.Find("Slots").GetComponent<Slotgame>().updateSelf();
+                        break;
                 }//end case 2
                 case 3:
                 {
