@@ -15,6 +15,7 @@ public class CharacterControl: MonoBehaviour
     private float speed;
 
     public Camera[] cameras;
+    public Canvas[] canvasses;
     private int currentCameraIndex;
     private int tempCameraIndex;
     public Text StartGameText;
@@ -35,10 +36,16 @@ public class CharacterControl: MonoBehaviour
 
         currentCameraIndex = 0;
 
+        setCamera();
+        setCanvas();
+        /*
         //Turn all cameras off, except the first default one
         for (int i = 1; i < cameras.Length; i++)
         {
             cameras[i].gameObject.SetActive(false);
+            //canvasses[i].GetComponent<CanvasRenderer>().enabled = false;
+            canvasses[i].gameObject.SetActive(false);
+
         }
 
         //If any cameras were added to the controller, enable the first one
@@ -47,7 +54,8 @@ public class CharacterControl: MonoBehaviour
             cameras[0].gameObject.SetActive(true);
             //Debug.Log("Camera with name: " + cameras[0].camera.name + ", is now enabled");
         }
-    }
+        */
+    }//end Start
 
     // Update is called once per frame
     void Update()
@@ -84,6 +92,7 @@ public class CharacterControl: MonoBehaviour
                 currentCameraIndex = 0;
 
                 setCamera();
+                setCanvas();
                 inGame = false;
                 Cursor.lockState = CursorLockMode.Locked;
             }//end if
@@ -103,6 +112,7 @@ public class CharacterControl: MonoBehaviour
                 startGame();
 
                 setCamera();
+                setCanvas();
                 inGame = true;
                 Cursor.lockState = CursorLockMode.None;
 
@@ -212,6 +222,16 @@ public class CharacterControl: MonoBehaviour
 
         cameras[currentCameraIndex].gameObject.SetActive(true);
     }//end set camera
+
+    void setCanvas()
+    {
+        for (int i = 0; i < canvasses.Length; i++)
+        {
+            canvasses[i].gameObject.SetActive(false);
+        }//end for
+
+        canvasses[currentCameraIndex].gameObject.SetActive(true);
+    }//end setCanvas
 
     void setText(bool show)//rename show
     {
