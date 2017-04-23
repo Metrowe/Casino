@@ -6,6 +6,9 @@ public class ChipDynamics : MonoBehaviour
 {
     public Material[] chipTypes = new Material[7];
 
+    private bool pickup;
+    private int value;
+
     void Start ()
     {
 		
@@ -15,6 +18,22 @@ public class ChipDynamics : MonoBehaviour
     {
 		
 	}//end update
+
+    void OnMouseOver()
+    {
+        //GameObject tempGame = GameObject.Find("Roulette");
+        GameObject tempPlayer = GameObject.Find("Player");
+
+        if (Input.GetMouseButtonDown(0) && pickup)
+        {
+            
+            tempPlayer.GetComponent<CharacterControl>().wallet += value;
+
+            Destroy(this.gameObject);
+        }//end if
+
+    }//end OnMouseOver
+
 
     public void staticChip(int index, Vector3 pos, Quaternion theta)
     {
@@ -28,6 +47,8 @@ public class ChipDynamics : MonoBehaviour
         GetComponent<Collider>().enabled = false;
         //GetComponent<Rigidbody>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
+
+        pickup = false;
         //rigidbody.velocity = Vector3.zero;
     }//end staticChip
 
@@ -40,6 +61,18 @@ public class ChipDynamics : MonoBehaviour
 
         GetComponent<Rigidbody>().velocity = new Vector3(       Random.Range(-2,2),  1, Random.Range(-2, 2)     );
         Destroy(this.gameObject, 5);
+
+        pickup = false;
+    }//end physicsChip
+
+    public void pickupChip(int index, Vector3 pos, Quaternion theta)
+    {
+        assignValue(index);
+        this.transform.localPosition = pos;
+        this.transform.localRotation = theta;
+
+        pickup = true;
+        value = 10;
     }//end physicsChip
 
     public void physicsChipRandom(int index)

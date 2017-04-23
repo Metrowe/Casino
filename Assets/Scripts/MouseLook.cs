@@ -24,7 +24,7 @@ public class MouseLook : MonoBehaviour
         {
             var md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 
-            if (md.y > 0 && transform.eulerAngles.x < 315 && transform.eulerAngles.x > 270 || md.y < 0 && transform.eulerAngles.x < 90 && transform.eulerAngles.x > 45)
+            if (md.y > 0 && transform.eulerAngles.x < 315 && transform.eulerAngles.x > 270 || md.y < 0 && transform.eulerAngles.x < 90 && transform.eulerAngles.x > 75)
             {
                 md.y = 0;
             }

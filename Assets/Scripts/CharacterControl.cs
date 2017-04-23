@@ -18,6 +18,8 @@ public class CharacterControl: MonoBehaviour
     public Canvas[] canvasses;
     private int currentCameraIndex;
     private int tempCameraIndex;
+
+    public Text walletText;
     public Text StartGameText;
 
     public int wallet;
@@ -26,6 +28,7 @@ public class CharacterControl: MonoBehaviour
     void Start()
     {
         wallet = 300;
+
 
         Cursor.lockState = CursorLockMode.Locked;
         speed = 7.0f;
@@ -233,7 +236,12 @@ public class CharacterControl: MonoBehaviour
         canvasses[currentCameraIndex].gameObject.SetActive(true);
     }//end setCanvas
 
-    void setText(bool show)//rename show
+    void setWallet()
+    {
+            walletText.text = "Wallet = " + wallet;
+    }//edn setText
+
+    void setText(bool show)
     {
         if(show)
         {
@@ -243,5 +251,5 @@ public class CharacterControl: MonoBehaviour
         {
             StartGameText.text = " ";
         }//edn else
-    }//edn setText
+    }//end setText
 }//end CharacterController

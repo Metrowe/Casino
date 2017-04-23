@@ -2,7 +2,9 @@
 //using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine.UI;
 using UnityEngine;
+
 
 
 public class RouletteGame : MonoBehaviour
@@ -23,7 +25,23 @@ public class RouletteGame : MonoBehaviour
     private int[] colors;
     private int[] order;
 
+    public Text currentBetText;
+    public Text previousNetText;
+    public Text walletText;
+
+    private int winnings;
     public bool spinning;
+
+    private void Start()
+    {
+
+        for(int i = 0;i < 200;i++)
+        {
+            GameObject localChip = Instantiate(BaseChip) as GameObject;
+
+            localChip.GetComponent<ChipDynamics>().pickupChip(2, new Vector3(      UnityEngine.Random.Range(-10.0f, 10.0f)     , 2, UnityEngine.Random.Range(-10.0f, 10.0f)), new Quaternion());
+        }
+    }
 
     public void startSelf()
     {
@@ -41,9 +59,11 @@ public class RouletteGame : MonoBehaviour
 
         betAmount = new int[] { 1, 5, 10, 50, 100, 500, 1000 };
         betIndex = 2;
+        winnings = 0;
+
 
         spinning = false;
-
+        setText();
     }//end startSelf
 
     public void endSelf()
@@ -85,7 +105,9 @@ public class RouletteGame : MonoBehaviour
                 print("MINBET ERROR MESSAGE");
                 //MINBET ERROR MESSAGE?
             }//end else
-        }
+        }//end else
+
+        setText();
     }//end increaseBet
 
     public void startSpin()
@@ -129,6 +151,7 @@ public class RouletteGame : MonoBehaviour
 
     public void winBet(int windex)
     {
+        winnings = 0;
         spinning = false;
         //GameObject tempPlayer = GameObject.Find("Player");
         int tempWallet = GameObject.Find("Player").GetComponent<CharacterControl>().wallet;
@@ -136,6 +159,7 @@ public class RouletteGame : MonoBehaviour
         for (int i = 0; i < bets[windex].Count; i++)
         {
             GameObject.Find("Player").GetComponent<CharacterControl>().wallet += bets[windex][i];
+            winnings += bets[windex][i];
         }//end for
 
         List<int> chipdexes = BaseChip.GetComponent<ChipDynamics>().minList(GameObject.Find("Player").GetComponent<CharacterControl>().wallet - tempWallet);
@@ -145,7 +169,8 @@ public class RouletteGame : MonoBehaviour
             buildChip(chipdexes[i]);
         }//end for
 
-        resetBets();
+        clearBets();
+        setText();
     }//end winBet
 
     void buildChip(int typeIndex)
@@ -167,9 +192,33 @@ public class RouletteGame : MonoBehaviour
 
             bets[index].Add(payout);
         }//end for
+
+        setText();
     }//end makeBet
 
-    void resetBets()
+    public void resetBets()
+    {
+        if (!spinning)
+        {
+            for (int i = 0; i < bets.Length; i++)
+            {
+                bets[i].Clear();
+            }//end for
+
+            GameObject tempPlayer = GameObject.Find("Player");
+
+            for (int i = storedNodes.Count - 1; i > -1; i--)
+            {
+                Destroy(storedNodes[i].GetComponent<NodeInteraction>().chipStack);
+                tempPlayer.GetComponent<CharacterControl>().wallet += storedNodes[i].GetComponent<NodeInteraction>().stackValue;
+                storedNodes[i].GetComponent<NodeInteraction>().stackValue = 0;
+            }//end for
+
+            setText();
+        }//end if
+    }//end resetBets
+
+    void clearBets()
     {
         for (int i = 0; i < bets.Length; i++)
         {
@@ -179,6 +228,7 @@ public class RouletteGame : MonoBehaviour
         for (int i = storedNodes.Count - 1; i > -1; i--)
         {
             Destroy(storedNodes[i].GetComponent<NodeInteraction>().chipStack);
+
             storedNodes[i].GetComponent<NodeInteraction>().stackValue = 0;
         }//end for
     }//end resetBets
@@ -190,6 +240,13 @@ public class RouletteGame : MonoBehaviour
             Debug.Log("Bets[" + i + "].Count = " + bets[i].Count);
         }//end for
     }//end resetBets
+
+    void setText()
+    {
+        currentBetText.text = "Current Bet Amount =" + betAmount[betIndex];
+        //previousNetText.text = "Winnings from last round = " + winnings;
+        walletText.text = "Wallet = " + GameObject.Find("Player").GetComponent<CharacterControl>().wallet;
+    }//end setText
 
     void readNumberArray()
     {
