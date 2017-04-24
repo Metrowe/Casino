@@ -70,6 +70,7 @@ public class ChipDynamics : MonoBehaviour
         assignValue(index);
         this.transform.localPosition = pos;
         this.transform.localRotation = theta;
+        this.transform.localScale = new Vector3(0.2f,0.01f,0.2f);
 
         pickup = true;
         value = 10;

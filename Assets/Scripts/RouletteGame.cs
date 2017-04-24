@@ -35,12 +35,6 @@ public class RouletteGame : MonoBehaviour
     private void Start()
     {
 
-        for(int i = 0;i < 200;i++)
-        {
-            GameObject localChip = Instantiate(BaseChip) as GameObject;
-
-            localChip.GetComponent<ChipDynamics>().pickupChip(2, new Vector3(      UnityEngine.Random.Range(-10.0f, 10.0f)     , 2, UnityEngine.Random.Range(-10.0f, 10.0f)), new Quaternion());
-        }
     }
 
     public void startSelf()

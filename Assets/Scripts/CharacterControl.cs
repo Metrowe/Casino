@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class CharacterControl: MonoBehaviour
 {
+    public GameObject BaseChip;
     //public float speed;
     public bool inGame;
     private bool readyGame;
@@ -214,6 +215,11 @@ public class CharacterControl: MonoBehaviour
                 break;
             }//end default
         }//end switch
+
+        if(wallet < 1)
+        {
+            looseChips();
+        }
     }//end setupGame
 
     void setCamera()
@@ -235,6 +241,23 @@ public class CharacterControl: MonoBehaviour
 
         canvasses[currentCameraIndex].gameObject.SetActive(true);
     }//end setCanvas
+
+    void buyPrize()
+    {
+
+
+    }
+
+    private void looseChips()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            GameObject localChip = Instantiate(BaseChip) as GameObject;
+
+            localChip.GetComponent<ChipDynamics>().pickupChip(2, transform.position + new Vector3(UnityEngine.Random.Range(-2.0f, 2.0f), 2, UnityEngine.Random.Range(-2.0f, 2.0f)), new Quaternion());
+        }
+    }
+
 
     void setWallet()
     {
