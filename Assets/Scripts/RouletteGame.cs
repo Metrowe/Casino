@@ -12,6 +12,9 @@ public class RouletteGame : MonoBehaviour
     public GameObject BetNode;
     public GameObject BaseChip;
 
+    public GameObject RouletteWheel;
+    public GameObject RouletteBall;
+
     //public GameObject[] chipTypes = new GameObject[7];
     private Vector3 fix = new Vector3(-0.354f, 1.11f, -0.739f);
     private Vector3 grid = new Vector3(0.175f, 0.001f, 0.135f);
@@ -54,7 +57,6 @@ public class RouletteGame : MonoBehaviour
         betAmount = new int[] { 1, 5, 10, 50, 100, 500, 1000 };
         betIndex = 2;
         winnings = 0;
-
 
         spinning = false;
         setText();
@@ -109,9 +111,9 @@ public class RouletteGame : MonoBehaviour
         if(!spinning)
         {
             spinning = true;
-            GameObject.Find("Wheel V4").GetComponent<WheelMovement>().theta = 5;
-
-
+            //GameObject.Find("Wheel V4").GetComponent<WheelMovement>().theta = 5;
+            RouletteWheel.GetComponent<WheelMovement>().theta = 5;
+            RouletteBall.GetComponent<BallMovement>().startRoll();
         }//end if
     }//end startSpin
 
@@ -120,7 +122,7 @@ public class RouletteGame : MonoBehaviour
     {
         if(spinning)
         {
-            GameObject.Find("Wheel V4").GetComponent<WheelMovement>().updateSelf();
+            RouletteWheel.GetComponent<WheelMovement>().updateSelf();
 
         }//end if
 
