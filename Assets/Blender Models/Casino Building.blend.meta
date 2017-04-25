@@ -1,0 +1,151 @@
+fileFormatVersion: 2
+guid: b28c64554b52a5f4bb843f8188b0d54f
+timeCreated: 1493154323
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Bottom_Railing_E
+    100002: Bottom_Railing_W
+    100004: //RootNode
+    100006: Ceiling
+    100008: Floor
+    100010: Pillar_NE
+    100012: Pillar_NW
+    100014: Pillar_SE
+    100016: Pillar_SW
+    100018: Text
+    100020: Top_Railing_E
+    100022: Top_Railing_W
+    100024: Walls
+    400000: Bottom_Railing_E
+    400002: Bottom_Railing_W
+    400004: //RootNode
+    400006: Ceiling
+    400008: Floor
+    400010: Pillar_NE
+    400012: Pillar_NW
+    400014: Pillar_SE
+    400016: Pillar_SW
+    400018: Text
+    400020: Top_Railing_E
+    400022: Top_Railing_W
+    400024: Walls
+    2300000: Bottom_Railing_E
+    2300002: Bottom_Railing_W
+    2300004: Ceiling
+    2300006: Floor
+    2300008: Pillar_NE
+    2300010: Pillar_NW
+    2300012: Pillar_SE
+    2300014: Pillar_SW
+    2300016: Text
+    2300018: Top_Railing_E
+    2300020: Top_Railing_W
+    2300022: Walls
+    3300000: Bottom_Railing_E
+    3300002: Bottom_Railing_W
+    3300004: Ceiling
+    3300006: Floor
+    3300008: Pillar_NE
+    3300010: Pillar_NW
+    3300012: Pillar_SE
+    3300014: Pillar_SW
+    3300016: Text
+    3300018: Top_Railing_E
+    3300020: Top_Railing_W
+    3300022: Walls
+    4300000: Ceiling
+    4300002: Bottom_Railing_W
+    4300004: Bottom_Railing_E
+    4300006: Top_Railing_E
+    4300008: Top_Railing_W
+    4300010: Pillar_NW
+    4300012: Pillar_NE
+    4300014: Pillar_SW
+    4300016: Pillar_SE
+    4300018: Text
+    4300020: Walls
+    4300022: Floor
+    6400000: Bottom_Railing_E
+    6400002: Bottom_Railing_W
+    6400004: Ceiling
+    6400006: Floor
+    6400008: Pillar_NE
+    6400010: Pillar_NW
+    6400012: Pillar_SE
+    6400014: Pillar_SW
+    6400016: Text
+    6400018: Top_Railing_E
+    6400020: Top_Railing_W
+    6400022: Walls
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 1
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
