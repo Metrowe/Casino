@@ -9,11 +9,18 @@ public class BallMovement : MonoBehaviour
     void Start()
     {
         //GetComponent<Rigidbody>().velocity = new Vector3(6f, 0, 0);
+        GetComponent<Rigidbody>().velocity = new Vector3(rdm(2), 1, rdm(2));
     }
 
     // Update is called once per frame
     void Update()
     {
+
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            GetComponent<Rigidbody>().velocity = new Vector3(rdm(2), 1, rdm(2));
+        }//end if
 
     }
 
@@ -21,7 +28,7 @@ public class BallMovement : MonoBehaviour
     {
         GetComponent<Rigidbody>().velocity = new Vector3(rdm(2), 1, rdm(2));
         //transform.localPosition = new Vector3(rdm(2), 1, rdm(2)) + GameObject.Find("Wheel V4").GetComponent<WheelMovement>().transform.position;
-        transform.position = new Vector3(rdm(0.3f), 0.2f, rdm(0.3f)) + GameObject.Find("Wheel V4").GetComponent<WheelMovement>().transform.position;
+        transform.position = new Vector3(rdm(0.3f), 0.2f, rdm(0.3f)) + GameObject.Find("Wheel V5").GetComponent<WheelMovement>().transform.position;
     }//end startRoll
 
     /*

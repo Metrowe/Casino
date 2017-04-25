@@ -41,7 +41,7 @@ public class WheelMovement : MonoBehaviour
 
             //spinspeed = //Random.Range(0.1f, 0.2f);
             //print("Wheel x theta = " + gameObject.transform.rotation.x);
-            print("Wheel y theta = " + gameObject.transform.rotation.y);
+            //print("Wheel y theta = " + gameObject.transform.rotation.y);
             //print("Wheel z theta = " + gameObject.transform.rotation.z);
 
         }//end else

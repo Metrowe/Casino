@@ -40,6 +40,11 @@ public class RouletteGame : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        //calculateWindex();
+    }
+
     public void startSelf()
     {
         storedNodes = new List<GameObject>();
@@ -143,7 +148,45 @@ public class RouletteGame : MonoBehaviour
             //GameObject tempPlayer = GameObject.Find("Player");
             Debug.Log("Wallet = " + GameObject.Find("Player").GetComponent<CharacterControl>().wallet);
         }//end if
+
+
+
+        /////////////////////////
+        calculateWindex();
+        ////////////////////////
     }//end updateSelf
+
+    public void calculateWindex()
+    {
+        float range = 360 / 37;
+
+        int windex = 0;
+
+        //float wingle = 1;
+
+        float wingle = Mathf.Atan2(
+            RouletteWheel.transform.position.x - RouletteBall.transform.position.x,
+            RouletteWheel.transform.position.z - RouletteBall.transform.position.z
+            ) * Mathf.Rad2Deg;
+
+        wingle = (wingle + 360) % 360;
+
+        
+        while (wingle < (   (windex * range) - range/2) || wingle > ((windex * range) + range / 2))
+        {
+            windex++;
+        }
+        
+        //print("Angle = " + angle);
+
+        //print("Angle = " + (wingle+360)% 360);
+
+        print("winning number = " + order[windex]);
+        //print("wheel Angle = " + RouletteWheel.transform.rotation.eulerAngles.y);
+        //transform.rotation.eulerAngles
+
+
+    }//end calculateWindex
 
     public void winBet(int windex)
     {
