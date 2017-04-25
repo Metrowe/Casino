@@ -14,6 +14,7 @@ public class RouletteGame : MonoBehaviour
 
     public GameObject RouletteWheel;
     public GameObject RouletteBall;
+    public GameObject WheelSync;
 
     //public GameObject[] chipTypes = new GameObject[7];
     private Vector3 fix = new Vector3(-0.354f, 1.11f, -0.739f);
@@ -158,9 +159,10 @@ public class RouletteGame : MonoBehaviour
 
     public void calculateWindex()
     {
-        float range = 360 / 37;
+        float range = 360.0f / 37.0f;
 
-        int windex = 0;
+
+        int windex = 1;
 
         //float wingle = 1;
 
@@ -169,19 +171,44 @@ public class RouletteGame : MonoBehaviour
             RouletteWheel.transform.position.z - RouletteBall.transform.position.z
             ) * Mathf.Rad2Deg;
 
-        wingle = (wingle + 360) % 360;
+        float wheelAngle = Mathf.Atan2(
+            RouletteWheel.transform.position.x - WheelSync.transform.position.x,
+            RouletteWheel.transform.position.z - WheelSync.transform.position.z
+            ) * Mathf.Rad2Deg;
+        //RouletteWheel.transform.Rotate.y = 1;
 
-        
+        //RouletteWheel.transform.eulerAngles = new Vector3(0, (RouletteWheel.transform.rotation.eulerAngles.y + 360.0f) % 360.0f, 0);
+        wingle = (wingle + 360.0f) % 360.0f;
+        wheelAngle = (wheelAngle + 360.0f) % 360.0f;
+
+        wingle = (wingle - wheelAngle + 360.0f) % 360.0f;
+
+        if (wingle < range/2.0f || wingle > 360.0f - range/2.0f)
+        {
+            windex = 0;
+        }//end if
+        else
+        {
+            while (wingle < ((windex * range) - range / 2.0f) || wingle > ((windex * range) + range / 2.0f))
+            {
+                windex++;
+            }//end while
+        }//end else
+        /*
         while (wingle < (   (windex * range) - range/2) || wingle > ((windex * range) + range / 2))
         {
             windex++;
         }
-        
-        //print("Angle = " + angle);
+        */
 
         //print("Angle = " + (wingle+360)% 360);
-
+        //print("Wheel Angle = " + wheelAngle);
+        
         print("winning number = " + order[windex]);
+        //print("windex = " + windex);
+        //print("Range = " + range);
+
+        //print("Angle = " + angle);
         //print("wheel Angle = " + RouletteWheel.transform.rotation.eulerAngles.y);
         //transform.rotation.eulerAngles
 

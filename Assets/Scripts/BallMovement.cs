@@ -9,7 +9,7 @@ public class BallMovement : MonoBehaviour
     void Start()
     {
         //GetComponent<Rigidbody>().velocity = new Vector3(6f, 0, 0);
-        GetComponent<Rigidbody>().velocity = new Vector3(rdm(2), 1, rdm(2));
+        //GetComponent<Rigidbody>().velocity = new Vector3(rdm(2), 1, rdm(2));
     }
 
     // Update is called once per frame

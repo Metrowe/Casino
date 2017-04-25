@@ -11,21 +11,24 @@ public class WheelMovement : MonoBehaviour
         theta = 0;
         //constant = 0.01f;
 
-        spinspeed = 3;//Random.Range(0.5f, 3.0f);
+        spinspeed = 3.0f;//Random.Range(0.5f, 3.0f);
+        count = resetValue;
     }
 
     public float theta;
     //private float constant;
-    private int count = 3;
+    private int count;
 
-    float spinspeed = 20;
+    private int resetValue = 5;
+
+    float spinspeed;
 
     public void updateSelf()
     {
         //transform.Rotate(0, spinspeed, 0);
         transform.Rotate(0, spinspeed, 0);
 
-        if (count > 0)
+        if (count > 1)
         {
             print("Wheel y theta = " + gameObject.transform.rotation.y);
 
@@ -37,7 +40,7 @@ public class WheelMovement : MonoBehaviour
 
             GameObject.Find("Roulette").GetComponent<RouletteGame>().winBet(0);
 
-            count = 3;
+            count = resetValue;
 
             //spinspeed = //Random.Range(0.1f, 0.2f);
             //print("Wheel x theta = " + gameObject.transform.rotation.x);
