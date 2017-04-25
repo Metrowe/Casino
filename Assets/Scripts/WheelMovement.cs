@@ -7,40 +7,41 @@ public class WheelMovement : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //theta = Random.Range(3, 8);
-        theta = 0;
-        //constant = 0.01f;
+        spinSpeed = resetSpeed;
+        count = resetCount;
+    }//end Start
 
-        spinspeed = 3.0f;//Random.Range(0.5f, 3.0f);
-        count = resetValue;
-    }
-
-    public float theta;
-    //private float constant;
     private int count;
+    private float spinSpeed;
 
-    private int resetValue = 5;
+    private int resetCount = 300;
+    private float resetSpeed = 3.0f;
 
-    float spinspeed;
+    
 
     public void updateSelf()
     {
-        //transform.Rotate(0, spinspeed, 0);
-        transform.Rotate(0, spinspeed, 0);
+        transform.Rotate(0, spinSpeed, 0);
 
         if (count > 1)
         {
+            if(count < resetCount * 0.5f)
+            {
+                spinSpeed -= resetSpeed / (resetCount * 0.5f);
+            }
             print("Wheel y theta = " + gameObject.transform.rotation.y);
 
             count--;
         }//end if
         else
         {
-            //theta = 0;
+            
+            GameObject tempGame = GameObject.Find("Roulette");
+            int result = tempGame.GetComponent<RouletteGame>().calculateWindex(); ;
+            tempGame.GetComponent<RouletteGame>().winBet(result);
 
-            GameObject.Find("Roulette").GetComponent<RouletteGame>().winBet(0);
-
-            count = resetValue;
+            spinSpeed = resetSpeed;
+            count = resetCount;
 
             //spinspeed = //Random.Range(0.1f, 0.2f);
             //print("Wheel x theta = " + gameObject.transform.rotation.x);
@@ -49,55 +50,4 @@ public class WheelMovement : MonoBehaviour
 
         }//end else
     }//end updateSelf
-            /*
-
-            GameObject tempGame = GameObject.Find("Roulette");
-
-            tempGame.GetComponent<RouletteGame>().winBet(0);
-            tempGame.GetComponent<RouletteGame>().spinning = false;
-            
-        }
-        //end else
-
-
-
-
-
-        /*
-        transform.Rotate(0, theta, 0);
-        
-        //theta -= constant;
-
-        if (theta > 0)
-        {
-            theta -= constant;
-            print("Wheel y theta = " + gameObject.transform.rotation.y);
-        }//end if
-        else
-        {
-            theta = 0;
-
-            GameObject.Find("Roulette").GetComponent<RouletteGame>().winBet(0);
-
-            //print("Wheel x theta = " + gameObject.transform.rotation.x);
-            print("Wheel y theta = " + gameObject.transform.rotation.y);
-            //print("Wheel z theta = " + gameObject.transform.rotation.z);
-            /*
-            GameObject tempGame = GameObject.Find("Roulette");
-
-            tempGame.GetComponent<RouletteGame>().winBet(0);
-            tempGame.GetComponent<RouletteGame>().spinning = false;
-            
-        }//end else
-        
-        }//end updateSelf
-        */
-
-        
-    }//end WheelMovement
-
-        /*
-        gameObject.transform.rotation.x; gameObject.transform.rotation.y; gameObject.transform.rotation.z;
-        These will return world coordinates.
-        gameObject.transform.localrotation.x; gameObject.transform.localrotation.y; gameObject.transform.localrotation.z;
-        */
+}//end WheelMovement

@@ -32,8 +32,10 @@ public class RouletteGame : MonoBehaviour
     public Text currentBetText;
     public Text previousNetText;
     public Text walletText;
+    public Text previousWinnerText;
 
     private int winnings;
+    private int lastNumber;
     public bool spinning;
 
     private void Start()
@@ -117,8 +119,7 @@ public class RouletteGame : MonoBehaviour
         if(!spinning)
         {
             spinning = true;
-            //GameObject.Find("Wheel V4").GetComponent<WheelMovement>().theta = 5;
-            RouletteWheel.GetComponent<WheelMovement>().theta = 5;
+            //RouletteWheel.GetComponent<WheelMovement>().theta = 5;
             RouletteBall.GetComponent<BallMovement>().startRoll();
         }//end if
     }//end startSpin
@@ -157,7 +158,7 @@ public class RouletteGame : MonoBehaviour
         ////////////////////////
     }//end updateSelf
 
-    public void calculateWindex()
+    public int calculateWindex()
     {
         float range = 360.0f / 37.0f;
 
@@ -201,18 +202,16 @@ public class RouletteGame : MonoBehaviour
         }
         */
 
+        return order[windex];
         //print("Angle = " + (wingle+360)% 360);
         //print("Wheel Angle = " + wheelAngle);
-        
-        print("winning number = " + order[windex]);
+
+        //print("winning number = " + order[windex]);
         //print("windex = " + windex);
         //print("Range = " + range);
 
         //print("Angle = " + angle);
         //print("wheel Angle = " + RouletteWheel.transform.rotation.eulerAngles.y);
-        //transform.rotation.eulerAngles
-
-
     }//end calculateWindex
 
     public void winBet(int windex)
@@ -312,6 +311,7 @@ public class RouletteGame : MonoBehaviour
         currentBetText.text = "Current Bet Amount =" + betAmount[betIndex];
         //previousNetText.text = "Winnings from last round = " + winnings;
         walletText.text = "Wallet = " + GameObject.Find("Player").GetComponent<CharacterControl>().wallet;
+        //previousWinnerText.text = "Last Number = " + GameObject.Find("Player").GetComponent<CharacterControl>().wallet;
     }//end setText
 
     void readNumberArray()

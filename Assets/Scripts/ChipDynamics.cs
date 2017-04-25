@@ -41,11 +41,8 @@ public class ChipDynamics : MonoBehaviour
 
         this.transform.localPosition = pos;
         this.transform.localRotation = theta;
-        //transform.Translate(pos);
-        //transform.Rotate(theta);
 
         GetComponent<Collider>().enabled = false;
-        //GetComponent<Rigidbody>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
 
         pickup = false;
@@ -59,6 +56,10 @@ public class ChipDynamics : MonoBehaviour
         this.transform.localPosition = pos;
         this.transform.localRotation = theta;
 
+        /////////////////////////////
+        //this.transform.localScale = new Vector3(1, 1, 1);
+        /////////////////////
+
         GetComponent<Rigidbody>().velocity = new Vector3(       Random.Range(-2,2),  1, Random.Range(-2, 2)     );
         Destroy(this.gameObject, 5);
 
@@ -71,15 +72,10 @@ public class ChipDynamics : MonoBehaviour
         this.transform.localPosition = pos;
         this.transform.localRotation = theta;
         this.transform.localScale = new Vector3(0.2f,0.01f,0.2f);
+        //this.transform.localScale = new Vector3(1, 1, 1);
 
         pickup = true;
         value = 10;
-    }//end physicsChip
-
-    public void physicsChipRandom(int index)
-    {
-        assignValue(index);
-        //Destroy(this.gameObject, 5);
     }//end physicsChip
 
     public List<int> minList(int total)

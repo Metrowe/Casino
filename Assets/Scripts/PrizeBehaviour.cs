@@ -5,7 +5,7 @@ using UnityEngine;
 public class PrizeBehaviour : MonoBehaviour
 {
     public GameObject Prize;
-    GameObject Player;
+    //GameObject Player;
 
     public int cost;
 

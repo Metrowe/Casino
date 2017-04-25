@@ -42,21 +42,13 @@ public class CharacterControl: MonoBehaviour
 
         setCamera();
         setCanvas();
+
         /*
-        //Turn all cameras off, except the first default one
-        for (int i = 1; i < cameras.Length; i++)
+        for (int i = 0; i < 1; i++)
         {
-            cameras[i].gameObject.SetActive(false);
-            //canvasses[i].GetComponent<CanvasRenderer>().enabled = false;
-            canvasses[i].gameObject.SetActive(false);
+            GameObject localChip = Instantiate(BaseChip) as GameObject;
 
-        }
-
-        //If any cameras were added to the controller, enable the first one
-        if (cameras.Length > 0)
-        {
-            cameras[0].gameObject.SetActive(true);
-            //Debug.Log("Camera with name: " + cameras[0].camera.name + ", is now enabled");
+            localChip.GetComponent<ChipDynamics>().pickupChip(2, transform.position + new Vector3(UnityEngine.Random.Range(-5.0f, 5.0f), 2, UnityEngine.Random.Range(-5.0f, 5.0f)), new Quaternion());
         }
         */
     }//end Start
@@ -254,10 +246,14 @@ public class CharacterControl: MonoBehaviour
         {
             GameObject localChip = Instantiate(BaseChip) as GameObject;
 
-            localChip.GetComponent<ChipDynamics>().pickupChip(2, transform.position + new Vector3(UnityEngine.Random.Range(-2.0f, 2.0f), 2, UnityEngine.Random.Range(-2.0f, 2.0f)), new Quaternion());
+            localChip.GetComponent<ChipDynamics>().pickupChip(2, transform.position + new Vector3(rdm(2.0f), 2, rdm(2.0f)), new Quaternion());
         }
     }
 
+    private float rdm(float num)
+    {
+        return Random.Range(-num, num);
+    }//end rdm
 
     void setWallet()
     {
