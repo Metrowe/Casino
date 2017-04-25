@@ -73,6 +73,7 @@ public class CharacterControl: MonoBehaviour
                 {
                         GameObject.Find("Slots").GetComponent<Slotgame>().updateSelf();
                         break;
+
                 }//end case 2
                 case 3:
                 {
@@ -158,7 +159,7 @@ public class CharacterControl: MonoBehaviour
             {
                     //ScriptName sn = gameObject.GetComponent<ScriptName>()
                     //sn.DoSomething();
-                    temp = GameObject.Find("Roulette");
+                temp = GameObject.Find("Roulette");
 				temp.GetComponent<RouletteGame>().startSelf();
                 break;
             }//end case 1
