@@ -8,28 +8,35 @@ public class Slotgame : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        originalrotation = transform.rotation;
+
     }
 
     public void startSelf()
     {
-        //result = new int [3];
+        spinSpeed = 5f;
+        spin = false;
+        result = new int[3];
+        Wheels = new GameObject[3];
+        Wheels[0] = GameObject.Find("Rotatey thing 1");
+        Wheels[1] = GameObject.Find("Rotatey thing 2");
+        Wheels[2] = GameObject.Find("Rotatey thing 3");
 
+        thetas = new float[] { 0.0f, 0.0f, 0.0f };
+        spinsLeft = new float[] { 0, 0, 0 };
+        pos = new int[] { 25, 70, 115, 160 };
+        losses = 0;
     }
 
-    bool slot = false;
-    bool spin = false;
-    int losses = 0;
+    bool spin;
+    int losses;
+    float spinSpeed;
 
-    public Quaternion originalrotation;
-    public Quaternion jackpot;
-    public Quaternion pupper;
-    public Quaternion sevens;
-    public Quaternion grape;
-
-    public float resetspeed = 1.0f;
-
+    GameObject[] Wheels;
+    float[] thetas;
+    float[] spinsLeft;
     public int[] result;
+    public int[] pos;
+    public float resetspeed = 1.0f;
 
     public void updateSelf()
     {
@@ -37,10 +44,14 @@ public class Slotgame : MonoBehaviour
         float smooth = 2.0f;
         float tilt = 30.0f;
 
+
         if (spin == false)
         {
             spinArmZ = -Input.GetAxis("Fire1") * tilt;
-            //spinArmZ = -Input.GetAxis("Vertical") * tilt;
+        }
+        else
+        {
+            wheelspin();
         }
 
         GameObject cur = GameObject.Find("Arm");
@@ -50,123 +61,93 @@ public class Slotgame : MonoBehaviour
         if (spin == false && cur.transform.eulerAngles.z < 280 && cur.transform.eulerAngles.z > 0)
         {
             spin = true;
-            Invoke("wheelspin", 1);
+            setSpin();
         }
+
+
+    }
+
+    public void setSpin()
+    {
+        print("Entering set spin");
+
+        //If losses are under 5 it's random
+        if (losses < 5)
+        {
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = Random.Range(0, 3);
+            }
+
+        }
+
+        //If they lose 5 times they get jackpot out of pity
+        else
+        {
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = 0;
+            }
+        }
+
+        for (int i = 0; i < Wheels.Length; i++)
+        {
+            int j;
+            j = result[i];
+
+            if (thetas[i] == pos[j])
+            {
+                spinsLeft[i] = Random.Range(1, 4) * 360 / spinSpeed;
+            }
+
+            if (thetas[i] < pos[j])
+            {
+                spinsLeft[i] = (pos[j] - thetas[i]) / spinSpeed;
+            }
+            else
+            {
+                spinsLeft[i] = (pos[j] + 360 - thetas[i]) / spinSpeed;
+            }
+
+            print("Spins" + spinsLeft[i]);
+        }
+
     }
 
     public void wheelspin()
     {
 
-        ///////////
-        print("Entering wheel spin");
-        ///////////
-
-        result = new int[3];
-
-        GameObject wheel1 = GameObject.Find("Rotatey thing 1");
-        GameObject wheel2 = GameObject.Find("Rotatey thing 2");
-        GameObject wheel3 = GameObject.Find("Rotatey thing 3");
-
-        if (losses < 5)
+        for (int i = 0; i < Wheels.Length; i++)
         {
-            for (int i = 0; i < 3; i++)
+            if (spinsLeft[i] > 0)
             {
-                result[i] = Random.Range(0, 3);
-
+                Wheels[i].transform.Rotate(0, spinSpeed, 0);
+                thetas[i] = (thetas[i] += spinSpeed) % 360;
+                spinsLeft[i]--;
             }
+        }//end for
 
-        }
-
-        if (losses > 5)
+        if (spinsLeft[0] == 0 && spinsLeft[1] == 0 && spinsLeft[2] == 0)
         {
-            for (int i = 0; i < 3; i++)
-            {
-                result[3] = 0;
-            }
-        }
-
-        if (result[0] == 0)
-        {
-            for (int i = 0; i < 50 + 360; i++)
-            {
-                wheel1.transform.Rotate(0, 1, 0);
-
-            }
-        }
-
-        if (result[1] == 0)
-        {
-            for (int i = 0; i < 50 + 360; i++)
-            {
-                wheel2.transform.Rotate(0, 1, 0);
-
-            }
-        }
-
-        if (result[2] == 0)
-        {
-            for (int i = 0; i < 50 + 360; i++)
-            {
-                wheel3.transform.Rotate(0, 1, 0);
-
-            }
-        }
-
-
-
-
-        /*if (result[0] == 0)
-        {
-            Quaternion spin = Quaternion.Euler(25, 0, 0);
-            wheel1.transform.rotation = Quaternion.Slerp(wheel1.transform.rotation, spin, Time.deltaTime * 30.0f);
-        }
-        if (result[1] == 0)
-        {
-            Quaternion spin = Quaternion.Euler(25, 0, 0);
-            wheel2.transform.rotation = Quaternion.Slerp(wheel2.transform.rotation, spin, Time.deltaTime * 30.0f);
-        }*/
-
-        print("Results are  ");
-
-        for (int i = 0; i < 3; i++)
-        {
-            print(result[i]);
-        }
-
-        if (result[0] == result[1] && result[1] == result[2])
-        {
-            print("Jackpot");
-            losses = 0;
-            print(losses);
             spin = false;
+            revealResult();
         }
-
-        if (result[0] != result[1] || result[0] != result[2] || result[1] != result[2])
-        {
-            print("No prize :(");
-            losses++;
-            print("Losses are");
-            print(losses);
-            spin = false;
-        }
-
-        StartCoroutine(Wait(3.0f));
-
-
-        wheel1.transform.localRotation = Quaternion.Slerp(wheel1.transform.rotation, originalrotation, Time.time * resetspeed);
-        //wheel1.transform.rotation = Quaternion.Slerp(wheel1.transform.rotation, originalrotation, Time.time * resetspeed);
-        wheel2.transform.rotation = Quaternion.Slerp(wheel2.transform.rotation, originalrotation, Time.time * resetspeed);
-        wheel3.transform.rotation = Quaternion.Slerp(wheel3.transform.rotation, originalrotation, Time.time * resetspeed);
-
-        ///////////
-        print("Leaving wheel spin");
-        ///////////
-
     }
 
-    private IEnumerator Wait(float waitTime)
+    public void revealResult()
     {
-        yield return new WaitForSeconds(2);
+
+        if (result[0] == result[1] && result[0] == result[2])
+        {
+            print("Jackpot! Congratulations!");
+        }
+
+        else
+        {
+            print("No win 😞");
+        }
     }
+
+
 
 }
