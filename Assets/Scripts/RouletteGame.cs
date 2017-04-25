@@ -33,6 +33,7 @@ public class RouletteGame : MonoBehaviour
     public Text previousNetText;
     public Text walletText;
     public Text previousWinnerText;
+    public Text stackValueText;
 
     private int winnings;
     private int lastNumber;
@@ -234,6 +235,8 @@ public class RouletteGame : MonoBehaviour
             buildChip(chipdexes[i]);
         }//end for
 
+
+
         clearBets();
         setText();
     }//end winBet
@@ -309,10 +312,22 @@ public class RouletteGame : MonoBehaviour
     void setText()
     {
         currentBetText.text = "Current Bet Amount =" + betAmount[betIndex];
-        //previousNetText.text = "Winnings from last round = " + winnings;
+        previousNetText.text = "Winnings from last round = " + winnings;
         walletText.text = "Wallet = " + GameObject.Find("Player").GetComponent<CharacterControl>().wallet;
         //previousWinnerText.text = "Last Number = " + GameObject.Find("Player").GetComponent<CharacterControl>().wallet;
     }//end setText
+
+    public void showPrice(bool show, int value)
+    {
+        if (show)
+        {
+            stackValueText.text = "Chips here = " + value;
+        }
+        else
+        {
+            stackValueText.text = " ";
+        }
+    }
 
     void readNumberArray()
     {

@@ -22,14 +22,17 @@ public class CharacterControl: MonoBehaviour
 
     public Text walletText;
     public Text StartGameText;
+    public Text priceText;
+
 
     public int wallet;
+    public List<GameObject> heldPrizes;
 
     // Use this for initialization
     void Start()
     {
         wallet = 300;
-
+        heldPrizes = new List<GameObject>();
 
         Cursor.lockState = CursorLockMode.Locked;
         speed = 7.0f;
@@ -43,6 +46,7 @@ public class CharacterControl: MonoBehaviour
         setCamera();
         setCanvas();
 
+        setWallet();
         /*
         for (int i = 0; i < 1; i++)
         {
@@ -208,7 +212,9 @@ public class CharacterControl: MonoBehaviour
             }//end default
         }//end switch
 
-        if(wallet < 1)
+        setWallet();
+
+        if (wallet < 1)
         {
             looseChips();
         }
@@ -238,6 +244,18 @@ public class CharacterControl: MonoBehaviour
     {
 
 
+    }
+
+    public void showPrice(bool show,int price)
+    {
+        if (show)
+        {
+            priceText.text = "Price = " + price;
+        }
+        else
+        {
+            priceText.text = " ";
+        }
     }
 
     private void looseChips()

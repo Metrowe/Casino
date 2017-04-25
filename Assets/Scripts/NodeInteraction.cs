@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NodeInteraction : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class NodeInteraction : MonoBehaviour
     void OnMouseEnter()
     {
         GetComponent<Renderer>().enabled = true;
+        GameObject.Find("Roulette").GetComponent<RouletteGame>().showPrice(true, stackValue);
     }//end OnMouseEnter
 
     void OnMouseOver()
@@ -51,6 +53,7 @@ public class NodeInteraction : MonoBehaviour
                 tempGame.GetComponent<RouletteGame>().makeBet(values, total);
 
                 stackValue += currentBet;
+                GameObject.Find("Roulette").GetComponent<RouletteGame>().showPrice(true, stackValue);
 
                 buildChipStack();
 
@@ -69,6 +72,7 @@ public class NodeInteraction : MonoBehaviour
     void OnMouseExit()
     {
         GetComponent<Renderer>().enabled = false;
+        GameObject.Find("Roulette").GetComponent<RouletteGame>().showPrice(false, stackValue);
     }//end OnMouseExit
 
     void buildChipStack()
