@@ -122,7 +122,8 @@ public class CharacterControl: MonoBehaviour
 
         if (Input.GetKeyDown("escape"))
         {
-            Cursor.lockState = CursorLockMode.None;
+            //Cursor.lockState = CursorLockMode.None;
+            Application.Quit();
         }//end if
     }
 
@@ -281,7 +282,7 @@ public class CharacterControl: MonoBehaviour
         return Random.Range(-num, num);
     }//end rdm
 
-    void setWallet()
+    public void setWallet()
     {
             walletText.text = "Wallet = " + wallet;
     }//edn setText

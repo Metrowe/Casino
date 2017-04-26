@@ -37,14 +37,14 @@ public class PrizeBehaviour : MonoBehaviour
         {
             //GameObject tempPlayer = GameObject.Find("Player");
             tempPlayer.GetComponent<CharacterControl>().wallet -= cost;
-
+            tempPlayer.GetComponent<CharacterControl>().setWallet();
             GameObject localPrize = Instantiate(Prize) as GameObject;
 
             localPrize.GetComponent<PositionPrize>().heldPrize(tempPlayer, new Vector3(
                 //Random.Range(-0.2f,0.2f), 
                 1,
                 //1, 
-                tempPlayer.GetComponent<CharacterControl>().heldPrizes.Count * 1,
+                tempPlayer.GetComponent<CharacterControl>().heldPrizes.Count * 0.5f,
                 2), 
                 new Quaternion());
 

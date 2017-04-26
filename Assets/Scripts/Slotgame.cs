@@ -1,6 +1,7 @@
 ﻿//using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Slotgame : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class Slotgame : MonoBehaviour
             Wheels[i].transform.rotation = Quaternion.Euler(270, 0, 0);
         }
 
+        setText();
     }
 
     bool spin;
@@ -44,6 +46,7 @@ public class Slotgame : MonoBehaviour
     float[] spinsLeft;
     public int[] result;
     public int[] pos;
+    public Text WalletText;
     //public float resetspeed = 1.0f;
 
     public void updateSelf()
@@ -72,9 +75,8 @@ public class Slotgame : MonoBehaviour
             setSpin();
 
             tempPlayer.GetComponent<CharacterControl>().wallet -= 5;
+            setText();
         }
-
-
     }
 
     public void setSpin()
@@ -157,7 +159,7 @@ public class Slotgame : MonoBehaviour
             {
                 GameObject localChip = Instantiate(BaseChip) as GameObject;
 
-                localChip.GetComponent<ChipDynamics>().physicsChip(chipdexes[i], transform.position + new Vector3(0, 1.15f, 0), new Quaternion());
+                localChip.GetComponent<ChipDynamics>().physicsChip(chipdexes[i], transform.position + new Vector3(0.2f, 1.5f, 0), new Quaternion());
             }//end for
 
             losses = 0;
@@ -168,5 +170,11 @@ public class Slotgame : MonoBehaviour
             print("No win :(");//😞
             losses++;
         }
+        setText();
+    }
+
+    void setText()
+    {
+        WalletText.text = "Wallet = " + GameObject.Find("Player").GetComponent<CharacterControl>().wallet;
     }
 }
