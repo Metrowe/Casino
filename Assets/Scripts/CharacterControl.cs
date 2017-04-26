@@ -31,7 +31,7 @@ public class CharacterControl: MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        wallet = 300;
+        wallet = 2000;
         heldPrizes = new List<GameObject>();
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -77,7 +77,7 @@ public class CharacterControl: MonoBehaviour
                 case 3:
                 {
 
-                    break;
+                        break;
                 }//end case 3
                 default:
                 {
@@ -157,9 +157,7 @@ public class CharacterControl: MonoBehaviour
         {
             case 1:
             {
-                    //ScriptName sn = gameObject.GetComponent<ScriptName>()
-                    //sn.DoSomething();
-                    temp = GameObject.Find("Roulette");
+                temp = GameObject.Find("Roulette");
 				temp.GetComponent<RouletteGame>().startSelf();
                 break;
             }//end case 1
@@ -204,7 +202,7 @@ public class CharacterControl: MonoBehaviour
             case 3:
             {
 
-                break;
+                    break;
             }//end case 3
             default:
             {

@@ -332,11 +332,29 @@ public class RouletteGame : MonoBehaviour
 
     void readNumberArray()
     {
+        order = new int[] { 0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26 };
+        colors = new int[37];
+        colors[0] = 0;
+        for (int i = 1; i < order.Length; i++)
+        {
+            if (i % 2 == 0)
+            {
+                colors[i] = -1;
+            }//end if
+            else
+            {
+                colors[i] = 1;
+            }//end else
+        }//edn for
+
+        //Unity build couldnt find the file, commented out code works in unity editor but not build
+        /*
         int counter = 0;
         int numVal;
         string line;
 
-        StreamReader file = new StreamReader("data/Wheel_Order.txt");
+        StreamReader file = new StreamReader( Application.dataPath + "data/Wheel_Order.txt");
+        //Application.dataPath + "/Level/Level1.txt"
 
         numVal = Int32.Parse(file.ReadLine());
         colors[0] = numVal;
@@ -362,7 +380,7 @@ public class RouletteGame : MonoBehaviour
         }//end while
 
         file.Close();
-        
+        */
     }//end readNumberArray
 
     void buildNode(float px, float py, float pz, float sx, float sy, float sz, List<int> tempList, int pay)
