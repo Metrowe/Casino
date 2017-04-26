@@ -12,7 +12,7 @@ public class PrizeBehaviour : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        cost = 20;
+        
 	}
 	
 	// Update is called once per frame
@@ -30,12 +30,14 @@ public class PrizeBehaviour : MonoBehaviour
 
     void OnMouseOver()
     {
-        //GameObject tempPlayer = GameObject.Find("Player");
+        GameObject tempPlayer = GameObject.Find("Player");
 
         //if (Input.GetMouseButtonDown(0) && !tempGame.GetComponent<RouletteGame>().spinning)
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && tempPlayer.GetComponent<CharacterControl>().wallet >= cost)
         {
-            GameObject tempPlayer = GameObject.Find("Player");
+            //GameObject tempPlayer = GameObject.Find("Player");
+            tempPlayer.GetComponent<CharacterControl>().wallet -= cost;
+
             GameObject localPrize = Instantiate(Prize) as GameObject;
 
             localPrize.GetComponent<PositionPrize>().heldPrize(tempPlayer, new Vector3(
@@ -45,8 +47,18 @@ public class PrizeBehaviour : MonoBehaviour
                 tempPlayer.GetComponent<CharacterControl>().heldPrizes.Count * 1,
                 2), 
                 new Quaternion());
+
+            if(cost <= 0)
+            {
+                Destroy(this.gameObject);
+            }
         }//end if
     }//end OnMouseOver
+
+    public void setCost()
+    {
+        cost = 0;
+    }
 
     void OnMouseExit()
     {

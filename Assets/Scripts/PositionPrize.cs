@@ -24,12 +24,23 @@ public class PositionPrize : MonoBehaviour
         this.transform.localPosition = pos;
         this.transform.localRotation = theta;
         myParent.GetComponent<CharacterControl>().heldPrizes.Add(this.gameObject);
+        myParent.GetComponent<CharacterControl>().carryCheck();
         //GetComponent<Collider>().enabled = false;
         //GetComponent<Rigidbody>().isKinematic = true;
     }//end staticChip
 
     public void dropPrize()
     {
+        //GameObject tempPlayer = GameObject.Find("Player");
+        GameObject localPrize = Instantiate(Prize) as GameObject;
 
+        //localPrize.tranform.Position = transform.position;
+        localPrize.GetComponent<PrizeBehaviour>().setCost();
+        localPrize.transform.localPosition = transform.position;
+        localPrize.transform.localRotation = transform.rotation;
+        localPrize.AddComponent<Rigidbody>();
+        //localPrize.GetComponent<PrizeBehaviour>().cost = 0;
+
+       Destroy(this.gameObject);
     }
 }

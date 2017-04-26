@@ -240,15 +240,23 @@ public class CharacterControl: MonoBehaviour
         canvasses[currentCameraIndex].gameObject.SetActive(true);
     }//end setCanvas
 
-    void buyPrize()
+    public void carryCheck()
     {
+        if(heldPrizes.Count > 5)
+        {
+            for(int i = 0; i < heldPrizes.Count; i++)
+            {
+                heldPrizes[i].GetComponent<PositionPrize>().dropPrize();
+            }//end for
+            //heldPrizes.Clear();
+            heldPrizes = new List<GameObject>();
+        }//edn if
 
-
-    }
+    }//end carryCheck
 
     public void showPrice(bool show,int price)
     {
-        if (show)
+        if (show && price > 0)
         {
             priceText.text = "Price = " + price;
         }
