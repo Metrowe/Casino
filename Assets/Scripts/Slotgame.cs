@@ -15,7 +15,7 @@ public class Slotgame : MonoBehaviour
     {
         spinSpeed = 5f;
         spin = false;
-        result = new int[3];
+        result = new int[] { 0, 0, 0 };
         Wheels = new GameObject[3];
         Wheels[0] = GameObject.Find("Rotatey thing 1");
         Wheels[1] = GameObject.Find("Rotatey thing 2");
@@ -44,7 +44,7 @@ public class Slotgame : MonoBehaviour
     float[] spinsLeft;
     public int[] result;
     public int[] pos;
-    public float resetspeed = 1.0f;
+    //public float resetspeed = 1.0f;
 
     public void updateSelf()
     {
@@ -159,23 +159,14 @@ public class Slotgame : MonoBehaviour
 
                 localChip.GetComponent<ChipDynamics>().physicsChip(chipdexes[i], transform.position + new Vector3(0, 1.15f, 0), new Quaternion());
             }//end for
+
+            losses = 0;
         }
 
         else
         {
             print("No win :(");//😞
-
-
-
-
-            List<int> chipdexes = BaseChip.GetComponent<ChipDynamics>().minList(40);
-
-            for (int i = 0; i < chipdexes.Count; i++)
-            {
-                GameObject localChip = Instantiate(BaseChip) as GameObject;
-
-                localChip.GetComponent<ChipDynamics>().physicsChip(chipdexes[i], transform.position + new Vector3(0, 2.0f, 3.0f), new Quaternion());
-            }//end for
+            losses++;
         }
     }
 }
