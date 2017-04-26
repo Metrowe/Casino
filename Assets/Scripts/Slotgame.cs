@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿//using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,6 +25,13 @@ public class Slotgame : MonoBehaviour
         spinsLeft = new float[] { 0, 0, 0 };
         pos = new int[] { 25, 70, 115, 160 };
         losses = 0;
+
+        for (int i = 0; i < Wheels.Length; i++)
+        {
+            //Wheels[i].transform.localRotation = new Quaternion(0, 0, 0);
+            Wheels[i].transform.rotation = Quaternion.Euler(270, 0, 0);
+        }
+
     }
 
     bool spin;
@@ -32,6 +39,7 @@ public class Slotgame : MonoBehaviour
     float spinSpeed;
 
     GameObject[] Wheels;
+    public GameObject BaseChip;
     float[] thetas;
     float[] spinsLeft;
     public int[] result;
@@ -43,9 +51,9 @@ public class Slotgame : MonoBehaviour
         float spinArmZ = 0;
         float smooth = 2.0f;
         float tilt = 30.0f;
+        GameObject tempPlayer = GameObject.Find("Player");
 
-
-        if (spin == false)
+        if (spin == false && tempPlayer.GetComponent<CharacterControl>().wallet > 5)
         {
             spinArmZ = -Input.GetAxis("Fire1") * tilt;
         }
@@ -55,13 +63,15 @@ public class Slotgame : MonoBehaviour
         }
 
         GameObject cur = GameObject.Find("Arm");
-        Quaternion target = Quaternion.Euler(0, 0, spinArmZ * 3);
+        Quaternion target = Quaternion.Euler(0, 180, spinArmZ * 3);
         cur.transform.rotation = Quaternion.Slerp(cur.transform.rotation, target, Time.deltaTime * smooth);
 
         if (spin == false && cur.transform.eulerAngles.z < 280 && cur.transform.eulerAngles.z > 0)
         {
             spin = true;
             setSpin();
+
+            tempPlayer.GetComponent<CharacterControl>().wallet -= 5;
         }
 
 
@@ -102,11 +112,11 @@ public class Slotgame : MonoBehaviour
 
             if (thetas[i] < pos[j])
             {
-                spinsLeft[i] = (pos[j] - thetas[i]) / spinSpeed;
+                spinsLeft[i] = (pos[j] - thetas[i]) / spinSpeed + Random.Range(1, 4) * 360 / spinSpeed;
             }
             else
             {
-                spinsLeft[i] = (pos[j] + 360 - thetas[i]) / spinSpeed;
+                spinsLeft[i] = (pos[j] + 360 - thetas[i]) / spinSpeed + Random.Range(1, 4) * 360 / spinSpeed;
             }
 
             print("Spins" + spinsLeft[i]);
@@ -140,14 +150,32 @@ public class Slotgame : MonoBehaviour
         if (result[0] == result[1] && result[0] == result[2])
         {
             print("Jackpot! Congratulations!");
+            GameObject.Find("Player").GetComponent<CharacterControl>().wallet += 40;
+            List<int> chipdexes = BaseChip.GetComponent<ChipDynamics>().minList(40);
+
+            for (int i = 0; i < chipdexes.Count; i++)
+            {
+                GameObject localChip = Instantiate(BaseChip) as GameObject;
+
+                localChip.GetComponent<ChipDynamics>().physicsChip(chipdexes[i], transform.position + new Vector3(0, 1.15f, 0), new Quaternion());
+            }//end for
         }
 
         else
         {
-            print("No win 😞");
+            print("No win :(");//😞
+
+
+
+
+            List<int> chipdexes = BaseChip.GetComponent<ChipDynamics>().minList(40);
+
+            for (int i = 0; i < chipdexes.Count; i++)
+            {
+                GameObject localChip = Instantiate(BaseChip) as GameObject;
+
+                localChip.GetComponent<ChipDynamics>().physicsChip(chipdexes[i], transform.position + new Vector3(0, 2.0f, 3.0f), new Quaternion());
+            }//end for
         }
     }
-
-
-
 }

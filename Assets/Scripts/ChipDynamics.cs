@@ -60,7 +60,7 @@ public class ChipDynamics : MonoBehaviour
         //this.transform.localScale = new Vector3(1, 1, 1);
         /////////////////////
 
-        GetComponent<Rigidbody>().velocity = new Vector3(       Random.Range(-2,2),  1, Random.Range(-2, 2)     );
+        //GetComponent<Rigidbody>().velocity = new Vector3(       Random.Range(-2,2),  1, Random.Range(-2, 2)     );
         Destroy(this.gameObject, 5);
 
         pickup = false;

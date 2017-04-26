@@ -68,6 +68,7 @@ public class RouletteGame : MonoBehaviour
         winnings = 0;
 
         spinning = false;
+        lastNumber = 0;
         setText();
     }//end startSelf
 
@@ -202,7 +203,7 @@ public class RouletteGame : MonoBehaviour
             windex++;
         }
         */
-
+        lastNumber = order[windex];
         return order[windex];
         //print("Angle = " + (wingle+360)% 360);
         //print("Wheel Angle = " + wheelAngle);
@@ -311,10 +312,10 @@ public class RouletteGame : MonoBehaviour
 
     void setText()
     {
-        currentBetText.text = "Current Bet Amount =" + betAmount[betIndex];
-        previousNetText.text = "Winnings from last round = " + winnings;
+        currentBetText.text = "Current Bet =" + betAmount[betIndex];
+        previousNetText.text = "Previous Winnings = " + winnings;
         walletText.text = "Wallet = " + GameObject.Find("Player").GetComponent<CharacterControl>().wallet;
-        //previousWinnerText.text = "Last Number = " + GameObject.Find("Player").GetComponent<CharacterControl>().wallet;
+        previousWinnerText.text = "Last Number = " + lastNumber;
     }//end setText
 
     public void showPrice(bool show, int value)
